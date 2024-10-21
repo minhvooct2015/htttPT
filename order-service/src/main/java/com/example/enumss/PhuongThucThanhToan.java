@@ -1,12 +1,12 @@
-package com.example;
+package com.example.enumss;
 
-public enum VaiTro {
-    ADMIN("Admin"),
-    KHACH_HANG("Khách hàng");
+public enum PhuongThucThanhToan {
+    THE("Thẻ"),
+    TIEN_MAT("Tiền mặt");
 
     private final String displayName;
 
-    VaiTro(String displayName) {
+    PhuongThucThanhToan(String displayName) {
         this.displayName = displayName;
     }
 
@@ -14,5 +14,4 @@ public enum VaiTro {
         return displayName;
     }
 }
-
 

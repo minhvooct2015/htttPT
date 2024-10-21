@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.enumss.TrangThaiDonHang;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +29,8 @@ public class DonHang {
     private BigDecimal tongTien;
 
     @Column(name = "Trang_thai")
-    private String trangThai;
+    @Enumerated(EnumType.STRING)
+    private TrangThaiDonHang trangThai;
 
     @Column(name = "Ho_ten")
     private String hoTen;

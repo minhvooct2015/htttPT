@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.enumss.PhuongThucGiaoHang;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,8 @@ public class GiaoHang {
     private Long maGiaoHang;
 
     @Column(name = "Ten_phuong_thuc")
-    private String tenPhuongThuc;
+    @Enumerated(EnumType.STRING)
+    private PhuongThucGiaoHang tenPhuongThuc;
 
     @Column(name = "Phi_giao_hang")
     private Double phiGiaoHang;

@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.enumss.PhuongThucThanhToan;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,8 @@ public class ThanhToan {
     private Long maThanhToan;
 
     @Column(name = "Phuong_thuc_thanh_toan")
-    private String phuongThucThanhToan;
+    @Enumerated(EnumType.STRING)
+    private PhuongThucThanhToan phuongThucThanhToan;
 
     @Column(name = "Ngay_thanh_toan")
     private LocalDate ngayThanhToan;

@@ -1,9 +1,7 @@
 package com.example;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.mindrot.jbcrypt.BCrypt;
@@ -21,9 +19,11 @@ public class UserEntity {
     private String sdt;
     private String diaChi;
     private String matKhau;
-    private String trangThai; // active/locked
+    @Enumerated(EnumType.STRING)
+    private TrangThai trangThai; // active/locked
     private String taiKhoan;
-    private String vaiTro; // e.g., admin, customer
+    @Enumerated(EnumType.STRING)
+    private VaiTro vaiTro;
 
 
     public void setMatKhau(String password) {

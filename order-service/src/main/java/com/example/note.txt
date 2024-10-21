@@ -1,0 +1,49 @@
+Order Service Features
+Create Order
+
+Allow users to create new orders by providing necessary details such as user ID, product IDs, quantities, and payment method.
+Automatically calculate the total price based on product prices and apply any applicable discounts.
+View Order
+
+Enable users to view details of their orders using order ID.
+Display order status, payment status, delivery method, and items in the order.
+Update Order
+
+Allow users to update their orders before they are confirmed, such as changing the quantity of products or the delivery address.
+Cancel Order
+
+Provide functionality for users to cancel their orders before they are shipped.
+Implement business logic to determine if an order can be canceled based on its status.
+List User Orders
+
+Allow users to list all their past orders with filtering options by status (e.g., processing, completed, canceled).
+Rate and Review Products
+
+Enable users to leave ratings and reviews for products they have purchased.
+Store reviews with references to both the user and the product.
+Apply Discount Code
+
+Allow users to apply discount codes when creating or updating their orders.
+Validate discount codes against the Giam_Gia table and apply the appropriate discount to the total.
+Payment Processing
+
+Integrate payment processing functionality for users to make payments for their orders.
+Handle different payment methods (e.g., credit card, cash on delivery) and store payment status.
+Shipping Options
+
+Provide users with different shipping options at checkout, showing the estimated delivery times and costs.
+Store selected shipping methods in the order details.
+Order History Notifications
+
+Send notifications to users via email or SMS when their order status changes (e.g., confirmed, shipped, delivered).
+Reorder Feature
+
+Allow users to easily reorder previous orders, automatically populating the cart with the same items.
+Order Analytics
+
+Collect and analyze order data for business insights, such as most popular products, total sales, and customer purchasing behavior.
+Implementation Tips
+DTOs: Use Data Transfer Objects (DTOs) to encapsulate the data for creating or updating orders.
+Exception Handling: Implement custom exception handling to manage errors gracefully (e.g., order not found, invalid input).
+Testing: Write integration tests to ensure the functionality works as expected.
+Security: Implement JWT-based authentication to secure order-related endpoints.

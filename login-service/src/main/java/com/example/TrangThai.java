@@ -1,12 +1,12 @@
 package com.example;
 
-public enum VaiTro {
-    ADMIN("Admin"),
-    KHACH_HANG("Khách hàng");
+public enum TrangThai {
+    ACTIVE("Active"),
+    BLOCKED("Blocked");
 
     private final String displayName;
 
-    VaiTro(String displayName) {
+    TrangThai(String displayName) {
         this.displayName = displayName;
     }
 
@@ -14,5 +14,4 @@ public enum VaiTro {
         return displayName;
     }
 }
-
 
