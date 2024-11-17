@@ -31,9 +31,22 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response register(UserRegistrationRequest request) {
-        UserEntity registeredUser = loginService.register(request);
-        return Response.ok(registeredUser).build(); // Return registered user object
+        try {
+            // Register the user
+            UserEntity registeredUser = loginService.register(request);
+
+            // Return the registered user in the response body with status CREATED (201)
+            return Response.status(Response.Status.CREATED)
+                    .entity(registeredUser) // Send the registered user as the response body
+                    .build();
+        } catch (Exception e) {
+            // Handle any exceptions, log the error, and return an appropriate response
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Error registering user: " + e.getMessage())
+                    .build();
+        }
     }
+
 }
 
 @Getter

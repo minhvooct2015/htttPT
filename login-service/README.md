@@ -54,3 +54,15 @@ If you want to learn more about building native executables, please consult http
 Easily start your Reactive RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+
+
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loginDB -e MYSQL_USER=loginUser -e MYSQL_PASSWORD=1234 -p 3306:3306 -d mysql:8.0
+
+docker exec -it mysql-container mysql -u loginUser -p1234 loginDB
+
+
+# MySQL container for App 1
+docker run --name mysql-container-app1 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loginDB1 -e MYSQL_USER=user1 -e MYSQL_PASSWORD=pass1 -p 3307:3306 -d mysql:8.0
+
+# MySQL container for App 2
+docker run --name mysql-container-app2 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loginDB2 -e MYSQL_USER=user2 -e MYSQL_PASSWORD=pass2 -p 3308:3306 -d mysql:8.0
