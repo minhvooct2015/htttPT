@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.Response;
 import lombok.Getter;
 import lombok.Setter;
 
-@Path("/login")
+@Path("/api")
 public class UserResource {
 
     @Inject
@@ -19,6 +19,7 @@ public class UserResource {
     LoginService loginService;
 
     @POST
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response login(LoginRequest loginRequest) {
