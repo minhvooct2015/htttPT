@@ -1,0 +1,22 @@
+    create table Loai_San_Pham (
+        Ma_danh_muc varchar(255) not null,
+        Mo_ta varchar(255),
+        Ten_danh_muc varchar(255) not null,
+        primary key (Ma_danh_muc)
+    ) engine=InnoDB;
+
+    create table San_Pham (
+        Ma_SP varchar(255) not null,
+        Gia_SP float(53) not null,
+        Hinh_SP varchar(255),
+        Mo_ta varchar(255),
+        SL_ton_kho integer,
+        Ten_SP varchar(255) not null,
+        Ma_danh_muc varchar(255) not null,
+        primary key (Ma_SP)
+    ) engine=InnoDB;
+
+    alter table San_Pham
+       add constraint FK7xktd6cbxucixy8n2xf6wplk0
+       foreign key (Ma_danh_muc)
+       references Loai_San_Pham (Ma_danh_muc);
