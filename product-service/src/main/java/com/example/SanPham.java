@@ -10,9 +10,8 @@ import lombok.Setter;
 public class SanPham {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Ma_SP")
-    private Long maSP;
+    private String maSP;
 
     @Column(name = "Ten_SP", nullable = false)
     private String tenSP;
@@ -32,5 +31,12 @@ public class SanPham {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Ma_danh_muc", nullable = false)
     private LoaiSanPham loaiSanPham;
+
+    @PrePersist
+    public void generateMaDanhMuc() {
+        if (this.maSP == null || this.maSP.isEmpty()) {
+            this.maSP = "SP" + String.format("%03d", (int) (Math.random() * 1000));
+        }
+    }
 
 }

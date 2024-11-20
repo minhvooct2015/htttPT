@@ -16,27 +16,36 @@ public class LoaiSanPhamResource {
     LoaiSanPhamService loaiSanPhamService;
 
     @GET
+    @Path("/all")
     public List<LoaiSanPham> getAllLoaiSanPham() {
         return loaiSanPhamService.getAllLoaiSanPham();
     }
 
     @GET
     @Path("/{id}")
-    public LoaiSanPham getLoaiSanPhamById(@PathParam("id") Long id) {
+    public LoaiSanPham getLoaiSanPhamById(@PathParam("id") String id) {
         return loaiSanPhamService.getLoaiSanPhamById(id);
     }
 
     @POST
     @Transactional
-    public Response addLoaiSanPham(LoaiSanPham loaiSanPham) {
+    public Response addLoaiSanPham(LoaiSanPhamDTO loaiSanPham) {
         loaiSanPhamService.addLoaiSanPham(loaiSanPham);
+        return Response.status(Response.Status.CREATED).build();
+    }
+
+    @POST
+    @Transactional
+    @Path("addList")
+    public Response addDsLoaiSanPham(List<LoaiSanPhamDTO> dsLoaiSanPham) {
+        dsLoaiSanPham.forEach(loaiSanPhamService::addLoaiSanPham);
         return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response updateLoaiSanPham(@PathParam("id") Long id, LoaiSanPham loaiSanPham) {
+    public Response updateLoaiSanPham(@PathParam("id") String id, LoaiSanPhamDTO loaiSanPham) {
         loaiSanPhamService.updateLoaiSanPham(id, loaiSanPham);
         return Response.ok().build();
     }
@@ -44,7 +53,7 @@ public class LoaiSanPhamResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response deleteLoaiSanPham(@PathParam("id") Long id) {
+    public Response deleteLoaiSanPham(@PathParam("id") String id) {
         loaiSanPhamService.deleteLoaiSanPham(id);
         return Response.noContent().build();
     }

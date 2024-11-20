@@ -11,32 +11,34 @@ public class LoaiSanPhamService {
     @Inject
     LoaiSanPhamRepository loaiSanPhamRepository;
 
+
     public List<LoaiSanPham> getAllLoaiSanPham() {
         return loaiSanPhamRepository.listAll();
     }
 
-    public LoaiSanPham getLoaiSanPhamById(Long id) {
-        return loaiSanPhamRepository.findById(id);
+    public LoaiSanPham getLoaiSanPhamById(String id) {
+        return loaiSanPhamRepository.findByIdLSP(id);
     }
 
     @Transactional
-    public void addLoaiSanPham(LoaiSanPham loaiSanPham) {
-        loaiSanPhamRepository.persist(loaiSanPham);
+    public void addLoaiSanPham(LoaiSanPhamDTO loaiSanPhamdto) {
+        LoaiSanPham loaisp = LoaiSpMapper.toEntity(loaiSanPhamdto);
+        loaiSanPhamRepository.persist(loaisp);
     }
 
     @Transactional
-    public void updateLoaiSanPham(Long id, LoaiSanPham loaiSanPham) {
-        LoaiSanPham existing = loaiSanPhamRepository.findById(id);
+    public void updateLoaiSanPham(String id, LoaiSanPhamDTO loaiSanPhamDTO) {
+        LoaiSanPham existing = loaiSanPhamRepository.findByIdLSP(id);
         if (existing != null) {
-            existing.setTenDanhMuc(loaiSanPham.getTenDanhMuc());
-            existing.setMoTa(loaiSanPham.getMoTa());
+            existing.setTenDanhMuc(loaiSanPhamDTO.getTenDanhMuc());
+            existing.setMoTa(loaiSanPhamDTO.getMoTa());
             loaiSanPhamRepository.persist(existing);
         }
     }
 
     @Transactional
-    public void deleteLoaiSanPham(Long id) {
-        loaiSanPhamRepository.deleteById(id);
+    public void deleteLoaiSanPham(String id) {
+        loaiSanPhamRepository.deleteByIdSP(id);
     }
 }
 
