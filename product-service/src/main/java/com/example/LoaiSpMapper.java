@@ -9,6 +9,7 @@ public class LoaiSpMapper {
             return null;
         }
         return new LoaiSanPhamDTO(
+                entity.getMaDanhMuc(),
                 entity.getTenDanhMuc(),
                 entity.getMoTa()
         );

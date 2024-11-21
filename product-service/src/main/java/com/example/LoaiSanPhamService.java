@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class LoaiSanPhamService {
@@ -12,8 +13,9 @@ public class LoaiSanPhamService {
     LoaiSanPhamRepository loaiSanPhamRepository;
 
 
-    public List<LoaiSanPham> getAllLoaiSanPham() {
-        return loaiSanPhamRepository.listAll();
+    public List<LoaiSanPhamDTO> getAllLoaiSanPham() {
+        List<LoaiSanPham> loaiSanPhams = loaiSanPhamRepository.listAll();
+        return loaiSanPhams.stream().map(LoaiSpMapper::toDTO).collect(Collectors.toList());
     }
 
     public LoaiSanPham getLoaiSanPhamById(String id) {

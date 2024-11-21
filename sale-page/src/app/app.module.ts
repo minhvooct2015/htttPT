@@ -6,24 +6,35 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import {HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { LoaiSanPhamComponent } from './components/admin/loaisanpham/loaisanpham.component';
+import { SanPhamComponent } from './components/admin/sanpham/sanpham.component';
+import { NavbarComponent } from './components/admin/sidebar/navbar.component';
+import {TopBarComponent} from "./components/admin/topbar/topbar.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoaiSanPhamComponent,
+    SanPhamComponent,
+    NavbarComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule
   ],
   providers: [],
+  exports: [
+    TopBarComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

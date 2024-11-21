@@ -1,6 +1,15 @@
 package com.example;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.core.Response;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static com.example.SanPhamResource.IMAGE_DIRECTORY;
 
 public class SanphamMapper {
 
@@ -8,15 +17,38 @@ public class SanphamMapper {
         if (sanPham == null) {
             return null;
         }
+        // Read the image as bytes
+        String hinhSP = sanPham.getHinhSP();
 
-        SanPhamDTO sanPhamDTO = new SanPhamDTO(// Directly map maSP
+        SanPhamDTO sanPhamDTO = new SanPhamDTO(
+                sanPham.getMaSP(),// Directly map maSP
                 sanPham.getTenSP(),              // Directly map tenSP
                 sanPham.getMoTa(),               // Directly map moTa
                 sanPham.getGiaSP(),              // Directly map giaSP
                 sanPham.getSoLuongTonKho(),      // Directly map soLuongTonKho
                 sanPham.getHinhSP() ,
-                sanPham.getLoaiSanPham().getTenDanhMuc());            // Directly map hinhSP);
+                sanPham.getLoaiSanPham().getTenDanhMuc(),
+                getBytes(hinhSP));            // Directly map hinhSP);
         return sanPhamDTO;
+    }
+
+    private static byte[] getBytes(String hinhSP) {
+        byte[] imageData = null;
+        if (hinhSP != null) {
+            try {
+
+
+//                Path imagePath = Paths.get(hinhSP);
+//                if (!Files.exists(imagePath)) {
+//                   return new byte[0];
+//                }
+//                imageData = Files.readAllBytes(imagePath);
+                return new byte[0];
+            } catch (Exception e) {
+                e.printStackTrace();  // Handle exception accordingly
+            }
+        }
+        return imageData;
     }
 
     public static SanPham toEntity(SanPhamDTO sanPhamDTO) {

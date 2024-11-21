@@ -16,6 +16,7 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
 public class SanPhamDTO {
 
 
+    private String maSP;
     private String tenSP;
     private String moTa;
     private Double giaSP;
@@ -23,6 +24,8 @@ public class SanPhamDTO {
 
     private String hinhSP;
     private String loaiSP;
+
+    private byte[] imageData;
 
     //consider => cho upload nhieu hinh anh (lam sau khi feature chinh done)
 }

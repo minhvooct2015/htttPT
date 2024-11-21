@@ -9,6 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class LoaiSanPhamDTO {
 
+        private String maDanhMuc;
         private String tenDanhMuc;
 
         private String moTa;

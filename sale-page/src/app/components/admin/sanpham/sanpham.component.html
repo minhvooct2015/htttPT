@@ -1,0 +1,103 @@
+<app-top-bar ></app-top-bar>
+<app-navbar></app-navbar>
+
+<div class="page-container">
+
+
+  <div class="main-content">
+    <h2>Manage San Pham</h2>
+
+    <!-- Add San Pham Section -->
+    <div class="form-container">
+      <h3>Add San Pham</h3>
+      <form (ngSubmit)="addSanPham()" enctype="multipart/form-data" class="add-form">
+        <input
+          type="text"
+          placeholder="Tên SP"
+          [(ngModel)]="newSanPham.tenSP"
+          name="tenSP"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Mô Tả"
+          [(ngModel)]="newSanPham.moTa"
+          name="moTa"
+        />
+        <input
+          type="number"
+          placeholder="Giá SP"
+          [(ngModel)]="newSanPham.giaSP"
+          name="giaSP"
+          required
+        />
+        <input
+          type="number"
+          placeholder="Số Lượng"
+          [(ngModel)]="newSanPham.soLuongTonKho"
+          name="soLuongTonKho"
+        />
+
+        <!-- Loai San Pham Dropdown -->
+        <div class="form-group">
+          <label for="loaiSanPham">Chọn Loại Sản Phẩm</label>
+          <select
+            id="loaiSanPham"
+            [(ngModel)]="newSanPham.loaiSP"
+            name="loaiSanPhamId"
+            required
+          >
+            <option value="" disabled selected>Select Category</option>
+            <option *ngFor="let loaiSanPham of loaiSanPhamList" [value]="loaiSanPham.maDanhMuc">
+              {{ loaiSanPham.tenDanhMuc }}
+            </option>
+          </select>
+        </div>
+
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          required
+        />
+        <button type="submit">
+          <i class="fas fa-plus"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- List San Pham Section -->
+    <div class="table-container">
+      <h3>Danh Sách San Pham</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Tên</th>
+          <th>Mô Tả</th>
+          <th>Giá</th>
+          <th>Hình Ảnh</th> <!-- New column for Image -->
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sanpham of sanphamList">
+          <td>{{ sanpham.tenSP }}</td>
+          <td>{{ sanpham.moTa }}</td>
+          <td>{{ sanpham.giaSP }}</td>
+          <td>
+            <!-- Display image for each San Pham -->
+            <img src="{{imageRootPath + sanpham.hinhSP}}" alt="{{ sanpham.tenSP }}" class="product-image"/>
+          </td>
+          <td class="action-buttons">
+            <button (click)="editSanPham(sanpham)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button (click)="deleteSanPham(sanpham.maSP)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

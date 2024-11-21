@@ -18,7 +18,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class SanPhamResource {
 
-    private static final String IMAGE_DIRECTORY = "src/main/resources/images";
+    public static final String IMAGE_DIRECTORY = "src/main/resources/images";
 
     @Inject
     SanPhamService sanPhamService;
@@ -93,6 +93,21 @@ public class SanPhamResource {
     @Path("/{imageName}")
     @Produces({"image/jpeg", "image/png"})
     public Response getImage(@jakarta.ws.rs.PathParam("imageName") String imageName) {
+        try {
+            java.nio.file.Path imagePath = Paths.get(IMAGE_DIRECTORY, imageName);
+            if (!Files.exists(imagePath)) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+            return Response.ok(Files.newInputStream(imagePath)).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GET
+    @Path("src/main/resources/images/{imageName}")
+    @Produces({"image/jpeg", "image/png"})
+    public Response getImagePath(@jakarta.ws.rs.PathParam("imageName") String imageName) {
         try {
             java.nio.file.Path imagePath = Paths.get(IMAGE_DIRECTORY, imageName);
             if (!Files.exists(imagePath)) {

@@ -1,0 +1,59 @@
+<app-top-bar ></app-top-bar>
+
+<app-navbar></app-navbar> <!-- Add navbar here -->
+
+<div class="container">
+  <h2>Manage Loai San Pham</h2>
+
+  <!-- Add or Edit Loai San Pham Section -->
+  <div class="form-container">
+    <h3>{{ isEditing ? 'Edit Loai San Pham' : 'Add Loai San Pham' }}</h3>
+    <form (ngSubmit)="isEditing ? updateLoaiSanPham() : addLoaiSanPham()" class="add-form">
+      <input
+        type="text"
+        placeholder="Tên Danh Mục"
+        [(ngModel)]="newLoai.tenDanhMuc"
+        name="tenDanhMuc"
+        required
+      />
+      <input
+        type="text"
+        placeholder="Mô Tả"
+        [(ngModel)]="newLoai.moTa"
+        name="moTa"
+      />
+      <button type="submit" title="Submit">
+        <i class="fas" [ngClass]="isEditing ? 'fa-save' : 'fa-plus'"></i>
+      </button>
+    </form>
+  </div>
+
+
+  <!-- List Loai San Pham Section -->
+  <div class="table-container">
+    <h3>Danh Sách Loai San Pham</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Mô Tả</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let loai of loaisanpham">
+        <td>{{ loai.tenDanhMuc }}</td>
+        <td>{{ loai.moTa }}</td>
+        <td class="action-buttons">
+          <button (click)="editLoaiSanPham(loai)" title="Edit">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="deleteLoaiSanPham(loai.maDanhMuc)" title="Delete">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

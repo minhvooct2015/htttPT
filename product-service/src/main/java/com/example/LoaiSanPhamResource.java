@@ -17,7 +17,7 @@ public class LoaiSanPhamResource {
 
     @GET
     @Path("/all")
-    public List<LoaiSanPham> getAllLoaiSanPham() {
+    public List<LoaiSanPhamDTO> getAllLoaiSanPham() {
         return loaiSanPhamService.getAllLoaiSanPham();
     }
 
