@@ -1,6 +1,7 @@
 package com.example.resource;
 
 import com.example.DonHang;
+import com.example.DonHangDTO;
 import com.example.service.DonHangService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -25,23 +26,20 @@ public class DonHangResource {
 
     @PUT
     @Path("/{id}")
-    public Response editDonHang(@PathParam("id") String id, DonHang donHang) {
-        DonHang updated = donHangService.editDonHang(id, donHang);
-        if (updated != null) {
-            return Response.ok(updated).build();
-        }
-        return Response.status(Response.Status.NOT_FOUND).build();
+    public Response editDonHang(@PathParam("id") String id, DonHangDTO donHang) {
+        donHangService.editDonHang(id, donHang);
+        return Response.ok().build();
     }
 
     @GET
     @Path("/{id}")
-    public DonHang getDonHangById(@PathParam("id") String id) {
+    public DonHangDTO getDonHangById(@PathParam("id") String id) {
         return donHangService.getDonHangById(id);
     }
 
     @GET
     @Path("/by-user/{maNguoiDung}")
-    public List<DonHang> getDonHangByMaNguoiDung(@PathParam("maNguoiDung") String maNguoiDung) {
+    public List<DonHangDTO> getDonHangByMaNguoiDung(@PathParam("maNguoiDung") String maNguoiDung) {
         return donHangService.getDonHangByMaNguoiDung(maNguoiDung);
     }
 
@@ -55,7 +53,7 @@ public class DonHangResource {
     }
 
     @GET
-    public List<DonHang> listAll() {
+    public List<DonHangDTO> listAll() {
         return donHangService.listAll();
     }
 }

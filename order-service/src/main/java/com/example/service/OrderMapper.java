@@ -2,6 +2,11 @@ package com.example.service;
 
 import com.example.ChiTietDonHang;
 import com.example.ChiTietDonHangDTO;
+import com.example.DonHang;
+import com.example.DonHangDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderMapper {
 
@@ -33,4 +38,56 @@ public class OrderMapper {
 
         return dto;
     }
+
+    public static DonHang dtoToEntityDonHang(DonHangDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        DonHang entity = new DonHang();
+        entity.setMaDh(dto.getMaDh());
+        entity.setMaNguoiDung(dto.getMaNguoiDung()); // Convert Long to String if needed
+        entity.setNgayDatHang(dto.getNgayDatHang());
+        entity.setTongTien(dto.getTongTien());
+        entity.setTrangThai(dto.getTrangThai());
+        entity.setPhuongThucGiaoHang(dto.getPhuongThucGiaoHang());
+        entity.setPhiGiaoHang(dto.getPhiGiaoHang());
+        entity.setThoiGianDuKien(dto.getThoiGianDuKien());
+        entity.setPhuongThucThanhToan(dto.getPhuongThucThanhToan());
+        entity.setNgayThanhToan(dto.getNgayThanhToan());
+
+        // Handle chiTietDonHangs if needed
+        // List<ChiTietDonHang> chiTietList = dto.getChiTietDonHangs()
+        // You can map chiTietDonHangs list if DTO contains it
+
+        return entity;
+    }
+
+    // Method to convert DonHang entity to DonHangDTO
+    public static DonHangDTO entityToDtoDonHang(DonHang entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        DonHangDTO dto = new DonHangDTO();
+        dto.setMaDh(entity.getMaDh());
+        dto.setMaNguoiDung(dto.getMaNguoiDung()); // Convert String to Long if needed
+        dto.setNgayDatHang(entity.getNgayDatHang());
+        dto.setTongTien(entity.getTongTien());
+        dto.setTrangThai(entity.getTrangThai());
+        dto.setPhuongThucGiaoHang(entity.getPhuongThucGiaoHang());
+        dto.setPhiGiaoHang(entity.getPhiGiaoHang());
+        dto.setThoiGianDuKien(entity.getThoiGianDuKien());
+        dto.setPhuongThucThanhToan(entity.getPhuongThucThanhToan());
+        dto.setNgayThanhToan(entity.getNgayThanhToan());
+
+//         If you need to handle chiTietDonHangs:
+         List<ChiTietDonHangDTO> chiTietDTOs = entity.getChiTietDonHangs().stream()
+                .map(OrderMapper::entityToDtoCTDH)
+                .collect(Collectors.toList());
+         dto.setDsCTDH(chiTietDTOs);
+
+        return dto;
+    }
+
 }

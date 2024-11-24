@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.enumss.PhuongThucGiaoHang;
+import com.example.enumss.PhuongThucThanhToan;
 import com.example.enumss.TrangThaiDonHang;
 import com.example.service.PKGenerationService;
 import jakarta.persistence.*;
@@ -33,12 +35,25 @@ public class DonHang {
     @Enumerated(EnumType.STRING)
     private TrangThaiDonHang trangThai;
 
-    @Column(name = "Ho_ten")
-    private String hoTen;
+    @Column(name = "Ten_phuong_thuc_gd")
+    @Enumerated(EnumType.STRING)
+    private PhuongThucGiaoHang phuongThucGiaoHang;
+
+    @Column(name = "Phi_giao_hang")
+    private Double phiGiaoHang;
+
+    @Column(name = "Thoi_gian_du_kien")
+    private LocalDate thoiGianDuKien;
 
     @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL)
     private List<ChiTietDonHang> chiTietDonHangs;
 
+    @Column(name = "Phuong_thuc_thanh_toan")
+    @Enumerated(EnumType.STRING)
+    private PhuongThucThanhToan phuongThucThanhToan;
+
+    @Column(name = "Ngay_thanh_toan")
+    private LocalDate ngayThanhToan;
     @PrePersist
     public void generatePK() {
         if (this.maDh == null || this.maDh.isEmpty()) {
