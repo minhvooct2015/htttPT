@@ -27,7 +27,7 @@ public class SanphamMapper {
                 sanPham.getGiaSP(),              // Directly map giaSP
                 sanPham.getSoLuongTonKho(),      // Directly map soLuongTonKho
                 sanPham.getHinhSP() ,
-                sanPham.getLoaiSanPham().getTenDanhMuc(),
+                sanPham.getLoaiSanPham().getMaDanhMuc(),
                 getBytes(hinhSP));            // Directly map hinhSP);
         return sanPhamDTO;
     }

@@ -12,6 +12,7 @@ import { LoaiSanPhamComponent } from './components/admin/loaisanpham/loaisanpham
 import { SanPhamComponent } from './components/admin/sanpham/sanpham.component';
 import { NavbarComponent } from './components/admin/sidebar/navbar.component';
 import {TopBarComponent} from "./components/admin/topbar/topbar.component";
+import { ProductPageComponent } from './customer/product-page/product-page.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {TopBarComponent} from "./components/admin/topbar/topbar.component";
     LoaiSanPhamComponent,
     SanPhamComponent,
     NavbarComponent,
-    TopBarComponent
+    TopBarComponent,
+    ProductPageComponent
   ],
   imports: [
     BrowserModule,
