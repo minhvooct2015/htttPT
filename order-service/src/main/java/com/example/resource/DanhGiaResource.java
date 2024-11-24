@@ -24,7 +24,7 @@ public class DanhGiaResource {
 
     @PUT
     @Path("/{id}")
-    public Response editDanhGia(@PathParam("id") Long id, DanhGia danhGia) {
+    public Response editDanhGia(@PathParam("id") String id, DanhGia danhGia) {
         DanhGia updated = danhGiaService.editDanhGia(id, danhGia);
         if (updated != null) {
             return Response.ok(updated).build();
@@ -34,7 +34,7 @@ public class DanhGiaResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteDanhGia(@PathParam("id") Long id) {
+    public Response deleteDanhGia(@PathParam("id") String id) {
         if (danhGiaService.deleteDanhGia(id)) {
             return Response.noContent().build();
         }

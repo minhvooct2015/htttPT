@@ -13,6 +13,7 @@ public class GiaoHangService {
     GiaoHangRepository giaoHangRepository;
 
     public GiaoHang addGiaoHang(GiaoHang giaoHang) {
+        giaoHang.setMaGiaoHang(null);
         giaoHangRepository.persist(giaoHang);
         return giaoHang;
     }

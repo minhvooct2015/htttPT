@@ -54,3 +54,10 @@ If you want to learn more about building native executables, please consult http
 Easily start your Reactive RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+
+
+docker run --name mysql-container-order -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=orderDB -e MYSQL_USER=loginUser -e MYSQL_PASSWORD=1234 -p 3308:3306 -d mysql:8.0
+
+
+lsof -i :9003
+kill -9 "pid"

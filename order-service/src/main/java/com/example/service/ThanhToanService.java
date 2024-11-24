@@ -13,6 +13,7 @@ public class ThanhToanService {
     ThanhToanRepository thanhToanRepository;
 
     public ThanhToan addThanhToan(ThanhToan thanhToan) {
+        thanhToan.setMaThanhToan(null);
         thanhToanRepository.persist(thanhToan);
         return thanhToan;
     }

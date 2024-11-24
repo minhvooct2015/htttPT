@@ -6,6 +6,8 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Path("/giamgia")
@@ -24,7 +26,7 @@ public class GiamGiaResource {
 
     @PUT
     @Path("/{id}")
-    public Response editGiamGia(@PathParam("id") Long id, GiamGia giamGia) {
+    public Response editGiamGia(@PathParam("id") String id, GiamGia giamGia) {
         GiamGia updated = giamGiaService.editGiamGia(id, giamGia);
         if (updated != null) {
             return Response.ok(updated).build();
@@ -34,7 +36,7 @@ public class GiamGiaResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteGiamGia(@PathParam("id") Long id) {
+    public Response deleteGiamGia(@PathParam("id") String id) {
         if (giamGiaService.deleteGiamGia(id)) {
             return Response.noContent().build();
         }
@@ -45,5 +47,13 @@ public class GiamGiaResource {
     public List<GiamGia> listAll() {
         return giamGiaService.listAll();
     }
+
+    @GET
+    @Path("/active")
+    public List<GiamGia> getActiveDiscounts(@QueryParam("date") String date) {
+        LocalDate today = LocalDate.parse(date);
+        return giamGiaService.getActiveDiscounts(today);
+    }
+
 }
 

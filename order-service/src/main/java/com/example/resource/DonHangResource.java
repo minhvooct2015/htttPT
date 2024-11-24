@@ -18,13 +18,14 @@ public class DonHangResource {
 
     @POST
     public Response addDonHang(DonHang donHang) {
+        donHang.setMaDh(null);
         DonHang created = donHangService.addDonHang(donHang);
         return Response.status(Response.Status.CREATED).entity(created).build();
     }
 
     @PUT
     @Path("/{id}")
-    public Response editDonHang(@PathParam("id") Long id, DonHang donHang) {
+    public Response editDonHang(@PathParam("id") String id, DonHang donHang) {
         DonHang updated = donHangService.editDonHang(id, donHang);
         if (updated != null) {
             return Response.ok(updated).build();
@@ -32,9 +33,21 @@ public class DonHangResource {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
+    @GET
+    @Path("/{id}")
+    public DonHang getDonHangById(@PathParam("id") String id) {
+        return donHangService.getDonHangById(id);
+    }
+
+    @GET
+    @Path("/by-user/{maNguoiDung}")
+    public List<DonHang> getDonHangByMaNguoiDung(@PathParam("maNguoiDung") String maNguoiDung) {
+        return donHangService.getDonHangByMaNguoiDung(maNguoiDung);
+    }
+
     @DELETE
     @Path("/{id}")
-    public Response deleteDonHang(@PathParam("id") Long id) {
+    public Response deleteDonHang(@PathParam("id") String id) {
         if (donHangService.deleteDonHang(id)) {
             return Response.noContent().build();
         }

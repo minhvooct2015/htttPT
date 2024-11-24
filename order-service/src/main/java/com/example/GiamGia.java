@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.service.PKGenerationService;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,9 +14,8 @@ import java.time.LocalDate;
 public class GiamGia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Ma_giam_gia")
-    private Long maGiamGia;
+    private String maGiamGia;
 
     @Column(name = "Code")
     private String code;
@@ -29,5 +29,10 @@ public class GiamGia {
     @Column(name = "Ngay_ket_thuc")
     private LocalDate ngayKetThuc;
 
-    // Getters and Setters
+    @PrePersist
+    public void generatePK() {
+        if (this.maGiamGia == null || this.maGiamGia.isEmpty()) {
+            this.maGiamGia = PKGenerationService.pkGen("MAGG");
+        }
+    }
 }

@@ -13,11 +13,12 @@ public class DanhGiaService {
     DanhGiaRepository danhGiaRepository;
 
     public DanhGia addDanhGia(DanhGia danhGia) {
+        danhGia.setMaDanhGia(null);
         danhGiaRepository.persist(danhGia);
         return danhGia;
     }
 
-    public DanhGia editDanhGia(Long id, DanhGia updatedDanhGia) {
+    public DanhGia editDanhGia(String id, DanhGia updatedDanhGia) {
         DanhGia danhGia = danhGiaRepository.findById(id);
         if (danhGia != null) {
             danhGia.setMaNguoiDung(updatedDanhGia.getMaNguoiDung());
@@ -29,7 +30,19 @@ public class DanhGiaService {
         return danhGia;
     }
 
-    public boolean deleteDanhGia(Long id) {
+    public DanhGia getDanhGiaById(String id) {
+        return danhGiaRepository.findById(id);
+    }
+
+    public List<DanhGia> getDanhGiaByMaNguoiDung(String maNguoiDung) {
+        return danhGiaRepository.findByMaNguoiDung(maNguoiDung);
+    }
+
+    public List<DanhGia> getDanhGiaByMaSp(String maSp) {
+        return danhGiaRepository.findByMaSp(maSp);
+    }
+
+    public boolean deleteDanhGia(String id) {
         return danhGiaRepository.deleteById(id);
     }
 
