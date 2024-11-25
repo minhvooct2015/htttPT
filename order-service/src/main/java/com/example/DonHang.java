@@ -45,7 +45,7 @@ public class DonHang {
     @Column(name = "Thoi_gian_du_kien")
     private LocalDate thoiGianDuKien;
 
-    @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ChiTietDonHang> chiTietDonHangs;
 
     @Column(name = "Phuong_thuc_thanh_toan")

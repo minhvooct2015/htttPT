@@ -1,5 +1,6 @@
 package com.example.resource;
 
+import com.example.DTOS.SanPhamCuaDonHangDTO;
 import com.example.DonHang;
 import com.example.DonHangDTO;
 import com.example.service.DonHangService;
@@ -18,10 +19,10 @@ public class DonHangResource {
     DonHangService donHangService;
 
     @POST
-    public Response addDonHang(DonHang donHang) {
+    public Response addDonHang(DonHangDTO donHang) {
         donHang.setMaDh(null);
-        DonHang created = donHangService.addDonHang(donHang);
-        return Response.status(Response.Status.CREATED).entity(created).build();
+         donHangService.addDonHang(donHang);
+        return Response.status(Response.Status.CREATED).build();
     }
 
     @PUT
@@ -29,6 +30,15 @@ public class DonHangResource {
     public Response editDonHang(@PathParam("id") String id, DonHangDTO donHang) {
         donHangService.editDonHang(id, donHang);
         return Response.ok().build();
+    }
+
+
+
+    @PUT
+    @Path("hasDonHangDaDat/{manguoidung}")
+    public Response hasDHDaDat(@PathParam("manguoidung") String manguoidung) {
+        boolean b = donHangService.hasDonHangDangDat(manguoidung);
+        return Response.ok().entity(b).build();
     }
 
     @GET
@@ -42,6 +52,13 @@ public class DonHangResource {
     public List<DonHangDTO> getDonHangByMaNguoiDung(@PathParam("maNguoiDung") String maNguoiDung) {
         return donHangService.getDonHangByMaNguoiDung(maNguoiDung);
     }
+
+    @GET
+    @Path("/dssp/{maNguoiDung}")
+    public List<SanPhamCuaDonHangDTO> getDsspByMaNguoiDung(@PathParam("maNguoiDung") String maNguoiDung) {
+        return donHangService.getDSSanPhamDonHangBy(maNguoiDung);
+    }
+
 
     @DELETE
     @Path("/{id}")

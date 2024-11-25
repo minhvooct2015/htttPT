@@ -6,6 +6,7 @@ import com.example.DonHang;
 import com.example.DonHangDTO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OrderMapper {
@@ -33,6 +34,7 @@ public class OrderMapper {
         ChiTietDonHangDTO dto = new ChiTietDonHangDTO();
         dto.setMaCtdh(entity.getMaCtdh());
         dto.setMaSp(entity.getMaSp());
+        dto.setMaDh(Optional.ofNullable(entity.getDonHang()).map(DonHang::getMaDh).orElse(null));
         dto.setSoLuong(entity.getSoLuong());
         dto.setThanhTien(entity.getThanhTien());
 
@@ -57,9 +59,12 @@ public class OrderMapper {
         entity.setNgayThanhToan(dto.getNgayThanhToan());
 
         // Handle chiTietDonHangs if needed
-        // List<ChiTietDonHang> chiTietList = dto.getChiTietDonHangs()
-        // You can map chiTietDonHangs list if DTO contains it
-
+         List<ChiTietDonHangDTO> dsCTDH = dto.getDsCTDH();
+        List<ChiTietDonHang> dsCTDHEntity = dsCTDH.stream()
+                .map(OrderMapper::dtoToEntityCTDH)
+                .peek(chiTietDonHang -> chiTietDonHang.setDonHang(entity))
+                .collect(Collectors.toList());
+        entity.setChiTietDonHangs(dsCTDHEntity);
         return entity;
     }
 

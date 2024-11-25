@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {SanPham} from "../../components/admin/sanpham.model";
 import {LoaiSanPham} from "../../components/admin/loaisanpham.model";
 import {AdminService} from "../../services/admin.service";
+import {OrderService} from "../../services/order.service";
 
 @Component({
   selector: 'app-product-page',
@@ -20,13 +21,16 @@ export class ProductPageComponent {
   imageRootPath: string = 'http://localhost:9002/san-pham/';
 
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private orderService: OrderService) {}
 
   ngOnInit(): void {
     this.getSanPham();
     this.getLoaiSanPham();
   }
 
+  addCart(sanPham: SanPham) {
+    this.orderService.addToCart(sanPham);
+  }
   // Function to filter sanphamList by loaiSP
   getSanPhamListByLoaiSP(loaiSP: string): SanPham[] {
     return this.sanphamList.filter(sanpham => sanpham.loaiSP === loaiSP);

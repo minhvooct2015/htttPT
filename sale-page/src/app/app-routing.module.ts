@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import {RegisterComponent} from "./components/register/register.component";
 import {SanPhamComponent} from "./components/admin/sanpham/sanpham.component";
 import {ProductPageComponent} from "./customer/product-page/product-page.component";
+import {CartPageComponent} from "./customer/cart-page/cart-page.component";
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'admin/sanpham', component: SanPhamComponent },
   // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'home', component: ProductPageComponent },
+  { path: 'cart', component: CartPageComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

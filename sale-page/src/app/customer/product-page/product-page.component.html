@@ -17,16 +17,6 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-<!--  &lt;!&ndash; Libraries Stylesheet &ndash;&gt;-->
-<!--  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">-->
-<!--  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">-->
-
-
-<!--  &lt;!&ndash; Customized Bootstrap Stylesheet &ndash;&gt;-->
-<!--  <link href="css/bootstrap.min.css" rel="stylesheet">-->
-
-<!--  &lt;!&ndash; Template Stylesheet &ndash;&gt;-->
-<!--  <link href="css/style.css" rel="stylesheet">-->
 </head>
 
 <body>
@@ -95,11 +85,14 @@
                         <p class="product-description">{{ sanpham.moTa }}</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                           <p class="text-dark fs-5 fw-bold mb-0">{{ sanpham.giaSP | currency:'USD' }}</p>
-                          <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                          <a (click)="addCart(sanpham)" class="btn border border-secondary rounded-pill px-3 text-primary">
                             <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
                           </a>
                         </div>
                       </div>
+
+
+
                     </div>
                   </div>
                 </div>
@@ -221,23 +214,6 @@
 </div>
 <!-- Fruits Shop End-->
 
-
-
-
-<!-- Back to Top -->
-<!--<a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>-->
-
-
-<!-- JavaScript Libraries -->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>-->
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>-->
-<!--<script src="lib/easing/easing.min.js"></script>-->
-<!--<script src="lib/waypoints/waypoints.min.js"></script>-->
-<!--<script src="lib/lightbox/js/lightbox.min.js"></script>-->
-<!--<script src="lib/owlcarousel/owl.carousel.min.js"></script>-->
-
-<!--&lt;!&ndash; Template Javascript &ndash;&gt;-->
-<!--<script src="js/main.js"></script>-->
 </body>
 
 </html>

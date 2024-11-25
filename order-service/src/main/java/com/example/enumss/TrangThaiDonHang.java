@@ -1,6 +1,7 @@
 package com.example.enumss;
 
 public enum TrangThaiDonHang {
+    DANG_DAT("Đang dat"),
     DANG_XU_LY("Đang xử lý"),
     DA_GIAO("Đã giao"),
     HUY("Hủy");

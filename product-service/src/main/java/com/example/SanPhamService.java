@@ -43,6 +43,12 @@ public class SanPhamService {
         return SanphamMapper.toDTO(sanPham);
     }
 
+    public List<SanPhamDTO> getSanPhamByIds(List<String> ids) {
+        List<SanPham> sanPhams = sanPhamRepository.findByDSMaSP(ids);
+
+        return sanPhams.stream().map(SanphamMapper::toDTO).collect(Collectors.toList());
+    }
+
     @Transactional
     public void addSanPham(SanPhamDTO sanPham, String loaiSanPhamId, MultipartBodyImageUpload multipartBodyImageUpload) {
         LoaiSanPham loaiSanPham = loaiSanPhamRepository.findByIdLSP(loaiSanPhamId);

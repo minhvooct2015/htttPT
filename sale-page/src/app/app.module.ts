@@ -13,6 +13,7 @@ import { SanPhamComponent } from './components/admin/sanpham/sanpham.component';
 import { NavbarComponent } from './components/admin/sidebar/navbar.component';
 import {TopBarComponent} from "./components/admin/topbar/topbar.component";
 import { ProductPageComponent } from './customer/product-page/product-page.component';
+import { CartPageComponent } from './customer/cart-page/cart-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProductPageComponent } from './customer/product-page/product-page.compo
     SanPhamComponent,
     NavbarComponent,
     TopBarComponent,
-    ProductPageComponent
+    ProductPageComponent,
+    CartPageComponent
   ],
   imports: [
     BrowserModule,

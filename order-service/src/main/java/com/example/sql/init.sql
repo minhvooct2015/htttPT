@@ -13,7 +13,7 @@ create table Don_Hang (
                           Phuong_thuc_thanh_toan enum ('THE','TIEN_MAT'),
                           Thoi_gian_du_kien date,
                           Tong_tien decimal(38,2),
-                          Trang_thai enum ('DANG_XU_LY','DA_GIAO','HUY'),
+                          Trang_thai enum ('DANG_DAT','DANG_XU_LY','DA_GIAO','HUY'),
                           primary key (Ma_DH)
 
 ) engine=InnoDB;
@@ -42,7 +42,7 @@ create table Don_Hang (
                           Ma_nguoi_dung varchar(255),
                           Ngay_dat_hang date,
                           Tong_tien decimal(38,2),
-                          Trang_thai enum ('DANG_XU_LY','DA_GIAO','HUY'),
+                          Trang_thai enum ('DANG_DAT','DANG_XU_LY','DA_GIAO','HUY'),
                           primary key (Ma_DH)
 ) engine=InnoDB;
 

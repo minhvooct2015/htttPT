@@ -35,6 +35,11 @@ public class SanPhamResource {
         return sanPhamService.getSanPhamById(id);
     }
 
+    @POST
+    @Path("danhsachSP")
+    public List<SanPhamDTO> getSanPhamById(List<String> ids) {
+        return sanPhamService.getSanPhamByIds(ids);
+    }
 
     @POST
     @Transactional

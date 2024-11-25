@@ -1,6 +1,12 @@
 package com.example.service;
 
+import com.example.ChiTietDonHang;
+import com.example.ChiTietDonHangDTO;
+import com.example.DTOS.SanPhamCuaDonHangDTO;
 import com.example.DonHangDTO;
+import com.example.enumss.TrangThaiDonHang;
+import com.example.product.ProductServiceClient;
+import com.example.repo.ChiTietDonHangRepository;
 import com.example.repo.DonHangRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -10,6 +16,7 @@ import java.util.stream.Collectors;
 import com.example.DonHang;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @ApplicationScoped
 public class DonHangService {
@@ -17,16 +24,88 @@ public class DonHangService {
     @Inject
      DonHangRepository donHangRepository;
 
+    @Inject
+    ChiTietDonHangRepository chiTietDonHangRepository;
+
+    @Inject
+    @RestClient
+    ProductServiceClient productServiceClient;
+
     @Transactional
-    public DonHang addDonHang(DonHang donHang) {
-        donHangRepository.persist(donHang);
-        return donHang;
+    public boolean hasDonHangDangDat(String maNguoidung) {
+        return !donHangRepository.findDHDaDatByMaNguoiDung(maNguoidung).isEmpty();
+    }
+    @Transactional
+    public void addDonHang(DonHangDTO donHangDTO) {
+        //consider call product to update
+
+        //calculate gia tien luon
+        List<DonHang> donHangList = donHangRepository.findDHDaDatByMaNguoiDung(donHangDTO.getMaNguoiDung());
+
+        if (donHangList.isEmpty()) {
+            // Map DonHangDTO to DonHang entity
+            DonHang donHang = OrderMapper.dtoToEntityDonHang(donHangDTO);
+            donHang.setTrangThai(TrangThaiDonHang.DANG_DAT); // Set default status
+            donHang.setMaDh(null);
+
+            // Persist the new DonHang
+            donHangRepository.persist(donHang);
+
+        } else {
+            //add new ctsp
+            DonHang donHangDangDat = donHangList.get(0);
+            List<ChiTietDonHang> chiTietDonHangsEntity = donHangDangDat.getChiTietDonHangs();
+            List<String> maSPInDB = chiTietDonHangsEntity.stream().map(ChiTietDonHang::getMaSp).collect(Collectors.toList());
+            List<ChiTietDonHangDTO> dsCTDH = donHangDTO.getDsCTDH();
+            dsCTDH.stream()
+                    .filter(ctdh -> !maSPInDB.contains(ctdh.getMaSp()))
+                    .map(OrderMapper::dtoToEntityCTDH)
+                    .peek(chiTietDonHang -> chiTietDonHang.setDonHang(donHangDangDat))
+                    .forEach(chiTietDonHangRepository::persist);
+//            donHangDangDat.setMaNguoiDung(donHangDTO.getMaNguoiDung());
+//            donHangDangDat.setNgayDatHang(donHangDTO.getNgayDatHang());
+//            donHangDangDat.setTongTien(donHangDTO.getTongTien());
+//            donHangDangDat.setTrangThai(donHangDTO.getTrangThai());
+//            donHangDangDat.setPhuongThucGiaoHang(donHangDTO.getPhuongThucGiaoHang());
+//            donHangDangDat.setPhiGiaoHang(donHangDTO.getPhiGiaoHang());
+//            donHangDangDat.setThoiGianDuKien(donHangDTO.getThoiGianDuKien());
+//            donHangDangDat.setPhuongThucThanhToan(donHangDTO.getPhuongThucThanhToan());
+//            donHangDangDat.setNgayThanhToan(donHangDTO.getNgayThanhToan());
+
+            // Here you can handle the update of related entities such as ChiTietDonHang
+
+            // Save and return the updated DonHang entity
+            donHangRepository.persist(donHangDangDat);
+        }
     }
 
     public List<DonHangDTO> getDonHangByMaNguoiDung(String maNguoiDung) {
         List<DonHang> donHangList = donHangRepository.findByMaNguoiDung(maNguoiDung);
         return donHangList.stream().map(OrderMapper::entityToDtoDonHang)
                 .collect(Collectors.toList());
+    }
+
+    public List<SanPhamCuaDonHangDTO> getDSSanPhamDonHangBy(String maNguoiDung) {
+        List<ChiTietDonHang> chiTietDonHangs = chiTietDonHangRepository.findByMaNguoiDung(maNguoiDung);
+        List<ChiTietDonHangDTO> donHangDTOS = chiTietDonHangs.stream()
+                .map(OrderMapper::entityToDtoCTDH)
+                .collect(Collectors.toList());
+        List<String> dsSanPhamId = donHangDTOS.stream().map(ChiTietDonHangDTO::getMaSp).collect(Collectors.toList());
+        List<SanPhamCuaDonHangDTO> allSPCuaDH = productServiceClient.getAllSPCuaDH(dsSanPhamId);
+        if (chiTietDonHangs != null && allSPCuaDH != null) {
+
+            // Iterate over allSPCuaDH and set each chiTietDonHangDTO from chiTietDonHangs
+            allSPCuaDH.forEach(sp -> {
+                // Assuming there's some logic to match them, e.g. by index or ID
+                donHangDTOS.stream()
+                        .filter(ctdh -> ctdh.getMaSp().equals(sp.getMaSP())) // Example match by ID
+                        .findFirst() // Assuming there's at least one matching item
+                        .ifPresent(ctdh -> {
+                            sp.setChiTietDonHangDTO(ctdh); // Set the corresponding ChiTietDonHangDTO
+                        });
+            });
+        }
+        return allSPCuaDH;
     }
 
     public DonHangDTO getDonHangById(String id) {
