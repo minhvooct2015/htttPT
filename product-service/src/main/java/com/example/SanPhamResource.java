@@ -2,6 +2,7 @@ package com.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -25,18 +26,21 @@ public class SanPhamResource {
 
     @GET
     @Path("/all")
+    @RolesAllowed("ADMIN")
     public List<SanPhamDTO> getAllSanPham() {
         return sanPhamService.getAllSanPham();
     }
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("ADMIN")
     public SanPhamDTO getSanPhamById(@PathParam("id") String id) {
         return sanPhamService.getSanPhamById(id);
     }
 
     @POST
     @Path("danhsachSP")
+    @RolesAllowed("ADMIN")
     public List<SanPhamDTO> getSanPhamById(List<String> ids) {
         return sanPhamService.getSanPhamByIds(ids);
     }
@@ -44,6 +48,7 @@ public class SanPhamResource {
     @POST
     @Transactional
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed("ADMIN")
     public Response addSanPham(@MultipartForm MultipartBodyImageUpload multipartBodyImageUpload, @QueryParam("loaiSanPhamId") String loaiSanPhamId) {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -62,6 +67,7 @@ public class SanPhamResource {
     @Path("update/{id}")
     @Transactional
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed("ADMIN")
     public Response updateSanPham(
             @PathParam("id") String id,
             @MultipartForm MultipartBodyImageUpload multipartBodyImageUpload,
@@ -89,6 +95,7 @@ public class SanPhamResource {
     @DELETE
     @Path("/{id}")
     @Transactional
+    @RolesAllowed("ADMIN")
     public Response deleteSanPham(@PathParam("id") String id) {
         sanPhamService.deleteSanPham(id);
         return Response.noContent().build();
@@ -97,6 +104,8 @@ public class SanPhamResource {
     @GET
     @Path("/{imageName}")
     @Produces({"image/jpeg", "image/png"})
+    @RolesAllowed("ADMIN")
+//    @RolesAllowed({ "User", "Admin" })
     public Response getImage(@jakarta.ws.rs.PathParam("imageName") String imageName) {
         try {
             java.nio.file.Path imagePath = Paths.get(IMAGE_DIRECTORY, imageName);

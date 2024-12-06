@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./topbar.component.css']
 })
 export class TopBarComponent {
- userName: string = 'User name -'; // User's name
+ userName: string = "Hello - " + localStorage.getItem("userName") + "-" + localStorage.getItem("userNumber"); // User's name
    appName: string = 'App name'; // Application name
 }

@@ -1,5 +1,6 @@
 package com.example;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -17,6 +18,7 @@ public class LoaiSanPhamResource {
 
     @GET
     @Path("/all")
+    @RolesAllowed("ADMIN")
     public List<LoaiSanPhamDTO> getAllLoaiSanPham() {
         return loaiSanPhamService.getAllLoaiSanPham();
     }
