@@ -23,6 +23,7 @@ public class UserRepository {
     }
 
 
+
     @Transactional
     public void save(UserEntity user) {
         entityManager.persist(user);

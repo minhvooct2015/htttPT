@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;
 
+
 @ApplicationScoped
 public class LoginService {
 
@@ -13,13 +14,9 @@ public class LoginService {
 
     public UserEntity login(String taiKhoan, String matKhau) {
         UserEntity user = userRepository.findByTaiKhoan(taiKhoan);
-
         if (user == null || !user.checkPassword(matKhau)) {
             throw new ForbiddenException("Invalid username or password");
         }
-
-        // Here you would generate a JWT token and return it
-        // Example: return generateToken(user);
         return user; // Replace with actual JWT token
     }
 

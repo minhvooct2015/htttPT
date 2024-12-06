@@ -6,13 +6,17 @@ import {catchError, Observable, throwError} from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/login'; // Replace with your backend URL.
+  // private apiUrl = 'http://localhost:3000/api/login'; // Replace with your backend URL.
 
   constructor(private http: HttpClient) {}
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    const apiUrl = 'http://localhost:3000/api/login'; // Replace with your backend URL.
-    return this.http.post(apiUrl, credentials);
+    const apiUrl = 'http://localhost:9000/api/login'; // Replace with your backend URL.
+    const payload = {
+      taiKhoan: credentials.username,
+      matKhau: credentials.password
+    };
+    return this.http.post(apiUrl, payload);
   }
 
 

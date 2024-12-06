@@ -14,7 +14,8 @@ import { NavbarComponent } from './components/admin/sidebar/navbar.component';
 import {TopBarComponent} from "./components/admin/topbar/topbar.component";
 import { ProductPageComponent } from './customer/product-page/product-page.component';
 import { CartPageComponent } from './customer/cart-page/cart-page.component';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +36,13 @@ import { CartPageComponent } from './customer/cart-page/cart-page.component';
     FontAwesomeModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   exports: [
     TopBarComponent
   ],
