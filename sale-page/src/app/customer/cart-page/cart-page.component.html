@@ -1,3 +1,6 @@
+
+<app-top-bar-cus></app-top-bar-cus>
+
 <div class="container-fluid page-header py-5">
   <h1 class="text-center text-white display-6">Cart</h1>
   <ol class="breadcrumb justify-content-center mb-0">
@@ -10,7 +13,7 @@
 
 
 <!-- Cart Page Start -->
-<div class="container-fluid py-5">
+<div class="container-fluid py-5" *ngIf="productsByUser.length>0">
   <div class="container py-5">
     <div class="table-responsive">
 
@@ -42,28 +45,29 @@
           </td>
           <td>
             <div class="input-group quantity mt-4" style="width: 100px;">
-              <div class="input-group-btn">
-                <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decreaseQuantity(product)">
-                  <i class="fa fa-minus"></i>
-                </button>
-              </div>
+<!--              <div class="input-group-btn">-->
+<!--                <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decreaseQuantity(product)">-->
+<!--                  <i class="fa fa-minus"></i>-->
+<!--                </button>-->
+<!--              </div>-->
               <input type="text"
                      class="form-control form-control-sm text-center border-0"
                      [(ngModel)]="product.chiTietDonHangDTO.soLuong"
                      (ngModelChange)="onQuantityChange(product)"
                      [value]="product.chiTietDonHangDTO.soLuong">
-              <div class="input-group-btn">
-                <button class="btn btn-sm btn-plus rounded-circle bg-light border" (click)="increaseQuantity(product)">
-                  <i class="fa fa-plus"></i>
-                </button>
-              </div>
+<!--              <div class="input-group-btn">-->
+<!--                <button class="btn btn-sm btn-plus rounded-circle bg-light border" (click)="increaseQuantity(product)">-->
+<!--                  <i class="fa fa-plus"></i>-->
+<!--                </button>-->
+<!--              </div>-->
             </div>
           </td>
           <td>
             <p class="mb-0 mt-4">{{ product.giaSP * product.chiTietDonHangDTO.soLuong | currency:'VND' }}</p>
           </td>
           <td>
-            <button class="btn btn-md rounded-circle bg-light border mt-4">
+            <button class="btn btn-md rounded-circle bg-light border mt-4"
+                    (click)="removeProduct(product)">
               <i class="fa fa-times text-danger"></i>
             </button>
           </td>
@@ -87,18 +91,89 @@
             <div class="d-flex justify-content-between">
               <h5 class="mb-0 me-4">Shipping</h5>
               <div class="">
-                <p class="mb-0">Flat rate: $3.00</p>
+                <p class="mb-0">{{ phiVC | currency:'VND' }}</p>
               </div>
             </div>
-            <p class="mb-0 text-end">Shipping to Ukraine.</p>
+<!--            <p class="mb-0 text-end">Shipping to Ukraine.</p>-->
           </div>
           <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
             <h5 class="mb-0 ps-4 me-4">Total</h5>
-            <p class="mb-0 pe-4">$99.00</p>
+            <p class="mb-0 pe-4">{{ phiVC + totalSum | currency:'VND' }}</p>
           </div>
-          <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+          <!-- Button in HTML -->
+          <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" (click)="proceedCheckout()">Proceed Checkout</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!--!&#45;&#45; Cart Page Start Dag xu ly&ndash;&gt;-->
+<div class="container-fluid py-5" *ngIf="productsProcessingByUser.length>0">
+  <div class="container py-5">
+    <div class="table-responsive">
+
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Products</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+<!--          <th scope="col">Handle</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of productsProcessingByUser">
+          <th scope="row">
+            <div class="d-flex align-items-center">
+              <!--              <img src="{{imageRootPath + sanpham.hinhSP}}" alt="{{ sanpham.tenSP }}" class="product-image"/>-->
+              <img src="{{imageRootPath + product.hinhSP}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+            </div>
+          </th>
+          <td>
+            <p class="mb-0 mt-4">{{ product.tenSP }}</p>
+          </td>
+          <td>
+            <p class="mb-0 mt-4">{{ product.giaSP | currency:'VND' }}</p>
+          </td>
+          <td>
+            <div class="input-group quantity mt-4" style="width: 100px;">
+              <!--              <div class="input-group-btn">-->
+              <!--                <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decreaseQuantity(product)">-->
+              <!--                  <i class="fa fa-minus"></i>-->
+              <!--                </button>-->
+              <!--              </div>-->
+              <input type="text"
+                     class="form-control form-control-sm text-center border-0"
+                     [(ngModel)]="product.chiTietDonHangDTO.soLuong"
+                     (ngModelChange)="onQuantityChange(product)"
+                     [value]="product.chiTietDonHangDTO.soLuong">
+              <!--              <div class="input-group-btn">-->
+              <!--                <button class="btn btn-sm btn-plus rounded-circle bg-light border" (click)="increaseQuantity(product)">-->
+              <!--                  <i class="fa fa-plus"></i>-->
+              <!--                </button>-->
+              <!--              </div>-->
+            </div>
+          </td>
+          <td>
+            <p class="mb-0 mt-4">{{ product.giaSP * product.chiTietDonHangDTO.soLuong | currency:'VND' }}</p>
+<!--          </td>-->
+<!--          <td>-->
+<!--            <button class="btn btn-md rounded-circle bg-light border mt-4"-->
+<!--                    (click)="removeProduct(product)">-->
+<!--              <i class="fa fa-times text-danger"></i>-->
+<!--            </button>-->
+<!--          </td>-->
+        </tr>
+        </tbody>
+      </table>
+
+
+
     </div>
   </div>
 </div>

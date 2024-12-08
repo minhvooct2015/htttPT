@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {SanPham} from "../components/admin/sanpham.model";
-import {Observable} from "rxjs";
-import {Product} from "../customer/product.model";
+import {Observable, tap, throwError} from "rxjs";
+import {DonHang, Product} from "../customer/product.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
   private apiUrl = 'http://localhost:9003/donhang';
+  private apiUrlCTDH = 'http://localhost:9003/chitietdonhang';
   constructor(private http: HttpClient) {}
 
 
@@ -16,9 +17,22 @@ export class OrderService {
     return this.http.get<Product[]>(`${this.apiUrl + "/dssp"}/${userId}`);
   }
 
+  removeSanPhamInCart(spId: string): Observable<void> {
+    console.log('Removing product with ID:', spId);
+    return this.http.delete<void>(`${this.apiUrlCTDH}/${spId}`);
+  }
+
+  // Method to initiate the checkout process
+  checkout(maDH: string, donHang: DonHang): Observable<void> {
+    console.log("checkout in order Service")
+
+    return this.http.put<void>(`${this.apiUrl + "/checkout"}/${maDH}`, donHang);
+
+  }
+
   addToCart(sanpham: SanPham): void {
     const donHang = {
-      maNguoiDung: 'U123', // Replace with actual user ID
+      maNguoiDung: localStorage.getItem("userNumber"), // Replace with actual user ID
       ngayDatHang: new Date().toISOString().split('T')[0], // Current date
       tongTien: sanpham.giaSP,
       trangThai: 'DANG_DAT',

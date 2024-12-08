@@ -1,0 +1,6 @@
+.my-header {
+  position: sticky;
+  top: 0; /* Ensures the top bar stays at the top of the viewport */
+  z-index: 1020; /* Ensures it stays above other content */
+  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.1) /* Shadow only at the bottom */
+}

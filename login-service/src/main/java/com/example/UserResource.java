@@ -60,11 +60,20 @@ public class UserResource {
     public Response register(UserRegistrationRequest request) {
         try {
             // Register the user
-            UserEntity registeredUser = loginService.register(request);
+            UserEntity user = loginService.register(request);
 
+            String token = Jwt.issuer("http://localhost:9000")  // Match `mp.jwt.verify.issuer`
+                    .upn(user.getTaiKhoan())
+                    .groups(new HashSet<>(Set.of(user.getVaiTro().toString()))) // Add user roles
+                    .claim("email", user.getEmail())
+                    .claim("userNumber", user.getMaNguoiDung())
+                    .claim("tenUser", user.getHoTen())
+                    .expiresAt(Instant.now().plus(3, ChronoUnit.HOURS)) // Token expires in 1 hour
+// Custom claim
+                    .sign();
             // Return the registered user in the response body with status CREATED (201)
             return Response.status(Response.Status.CREATED)
-                    .entity(registeredUser) // Send the registered user as the response body
+                    .entity(new AuthResponse(token)) // Send the registered user as the response body
                     .build();
         } catch (Exception e) {
             // Handle any exceptions, log the error, and return an appropriate response

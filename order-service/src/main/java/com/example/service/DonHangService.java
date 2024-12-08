@@ -62,17 +62,13 @@ public class DonHangService {
                     .map(OrderMapper::dtoToEntityCTDH)
                     .peek(chiTietDonHang -> chiTietDonHang.setDonHang(donHangDangDat))
                     .forEach(chiTietDonHangRepository::persist);
-//            donHangDangDat.setMaNguoiDung(donHangDTO.getMaNguoiDung());
-//            donHangDangDat.setNgayDatHang(donHangDTO.getNgayDatHang());
-//            donHangDangDat.setTongTien(donHangDTO.getTongTien());
-//            donHangDangDat.setTrangThai(donHangDTO.getTrangThai());
-//            donHangDangDat.setPhuongThucGiaoHang(donHangDTO.getPhuongThucGiaoHang());
-//            donHangDangDat.setPhiGiaoHang(donHangDTO.getPhiGiaoHang());
-//            donHangDangDat.setThoiGianDuKien(donHangDTO.getThoiGianDuKien());
-//            donHangDangDat.setPhuongThucThanhToan(donHangDTO.getPhuongThucThanhToan());
-//            donHangDangDat.setNgayThanhToan(donHangDTO.getNgayThanhToan());
-
-            // Here you can handle the update of related entities such as ChiTietDonHang
+             for(ChiTietDonHangDTO chiTietDonHangDTO: dsCTDH) {
+                 String maSpInput = chiTietDonHangDTO.getMaSp();
+                 if(maSPInDB.contains(maSpInput)) {
+                     chiTietDonHangsEntity.stream().filter(ctdh -> ctdh.getMaSp().equals(maSpInput))
+                             .forEach(ctsp -> ctsp.setSoLuong(ctsp.getSoLuong() + 1));
+                 }
+             }
 
             // Save and return the updated DonHang entity
             donHangRepository.persist(donHangDangDat);
@@ -101,8 +97,11 @@ public class DonHangService {
                         .filter(ctdh -> ctdh.getMaSp().equals(sp.getMaSP())) // Example match by ID
                         .findFirst() // Assuming there's at least one matching item
                         .ifPresent(ctdh -> {
+
                             sp.setChiTietDonHangDTO(ctdh); // Set the corresponding ChiTietDonHangDTO
                         });
+                sp.setTrangThaiDonHang(chiTietDonHangs.get(0).getDonHang().getTrangThai());
+                sp.setPhiGiaoHang(chiTietDonHangs.get(0).getDonHang().getPhiGiaoHang());
             });
         }
         return allSPCuaDH;
@@ -136,6 +135,13 @@ public class DonHangService {
 
         // Save and return the updated DonHang entity
          donHangRepository.persist(existingDonHang);
+    }
+
+    @Transactional
+    public void editTragThaiDonHang(String id, DonHangDTO donHangDTO) {
+        // Find the existing DonHang entity by its ID (maDh)
+        DonHang existingDonHang = donHangRepository.findById(id);
+        existingDonHang.setTrangThai(donHangDTO.getTrangThai());
     }
 
     public boolean deleteDonHang(String id) {

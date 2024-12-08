@@ -35,6 +35,7 @@ public class DonHang {
     @Enumerated(EnumType.STRING)
     private TrangThaiDonHang trangThai;
 
+    //bo
     @Column(name = "Ten_phuong_thuc_gd")
     @Enumerated(EnumType.STRING)
     private PhuongThucGiaoHang phuongThucGiaoHang;
@@ -48,10 +49,12 @@ public class DonHang {
     @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ChiTietDonHang> chiTietDonHangs;
 
+    //bo
     @Column(name = "Phuong_thuc_thanh_toan")
     @Enumerated(EnumType.STRING)
     private PhuongThucThanhToan phuongThucThanhToan;
 
+    //bo
     @Column(name = "Ngay_thanh_toan")
     private LocalDate ngayThanhToan;
     @PrePersist

@@ -32,6 +32,12 @@ public class DonHangResource {
         return Response.ok().build();
     }
 
+    @PUT
+    @Path("checkout/{id}")
+    public Response editTragThaiDonHang(@PathParam("id") String id, DonHangDTO donHang) {
+        donHangService.editTragThaiDonHang(id, donHang);
+        return Response.ok().build();
+    }
 
 
     @PUT

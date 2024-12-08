@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {LoaiSanPham} from "../components/admin/loaisanpham.model";
-import {SanPham} from "../components/admin/sanpham.model";
-
+import {SanPham, UserInfor} from "../components/admin/sanpham.model";
+import {jwtDecode} from "jwt-decode";
 @Injectable({
   providedIn: 'root',
 })
@@ -44,4 +44,52 @@ export class AdminService {
 
   //todo hide button if khong xoa duoc loai s do bi khoa ngoai
   //todo hide button if khong xoa duoc loai s do bi khoa ngoai
+
+  onLogout(): void {
+    // Clear user-related data from localStorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userNumber');
+    localStorage.removeItem('tentk');
+
+  }
+  getUserInfor(token: any): UserInfor {
+    // try {
+      const decodedToken: any = jwtDecode(token);
+      let tentk = decodedToken.upn;  // Username (user principal name)
+      let userNumber = decodedToken.userNumber;  // User account (userNumber)
+      let userName = decodedToken.tenUser
+
+      const userInfor: UserInfor = {
+        userNumber: userNumber, // User account (userNumber)
+        userName: userName,
+        tenTK: tentk,// Full user name
+        role: decodedToken.groups ? decodedToken.groups[0] : '' // First group in array, if any
+      };
+
+      return userInfor;
+    // } catch (error) {
+    //   console.error('Failed to decode token:', error);
+    //   return
+    // }
+  }
+
+  isLoginedUser(): boolean {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        return false;
+      }
+      const decoded: any = jwtDecode(token); // Use 'any' type if the structure is unknown
+      const now = Math.floor(Date.now() / 1000); // Current time in seconds
+      return decoded.exp > now; // Check if the token is still valid
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return false;
+    }
+  }
+
+
+
+
 }

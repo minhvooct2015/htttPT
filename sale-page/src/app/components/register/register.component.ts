@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { faAsterisk } from '@fortawesome/free-solid-svg-icons'; // Import FontAwesome icon
-import { Router } from '@angular/router';  // Import the Router service
-
+import { Router } from '@angular/router';
+import { jwtDecode } from "jwt-decode";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -34,7 +34,26 @@ export class RegisterComponent {
         (response) => {
           console.log('Registration successful!', response);
           // redirect only add in constructor and here
-          this.router.navigate(['/login']);
+          console.log('Login successful!', response);
+          localStorage.setItem('token', response.token)
+          /// Decode the token and extract user information
+          const decodedToken: any = jwtDecode(response.token);
+          let tentk = decodedToken.upn;  // Username (user principal name)
+          let userNumber = decodedToken.userNumber;  // User account (userNumber)
+          let userName = decodedToken.tenUser
+          let groups = decodedToken.groups || []
+          // Store user information in the UserService for reuse
+          localStorage.setItem("userName", userName)
+          localStorage.setItem("userNumber", userNumber)
+          localStorage.setItem("tentk", tentk)
+          console.log('Decoded User Info:', userName, userNumber, tentk);
+          // Redirect based on groups
+          if (groups.includes('ADMIN')) {
+            this.router.navigate(['admin/sanpham']); // Redirect to /admin
+          } else {
+            this.router.navigate(['/home']); // Redirect to /sanpham
+          }
+          // this.router.navigate(['/login']);
         },
         (error) => {
           this.errorMessage = 'Registration failed. Please try again.';

@@ -2,7 +2,7 @@ package com.example;
 
 public enum VaiTro {
     ADMIN("Admin"),
-    KHACH_HANG("Khách hàng");
+    KHACHHANG("Khách hàng");
 
     private final String displayName;
 

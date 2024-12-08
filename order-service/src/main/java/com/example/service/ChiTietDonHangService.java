@@ -44,7 +44,7 @@ public class ChiTietDonHangService {
         }
     }
 
-    @Transactional
+
     public boolean deleteChiTietDonHang(String id) {
 
         return chiTietDonHangRepository.deleteById(id);

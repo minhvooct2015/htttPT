@@ -9,3 +9,7 @@
   "taiKhoan": "user123",
   "vaiTro": "user"
 }
+
+
+//ALTER TABLE NguoiDung MODIFY COLUMN vaiTro VARCHAR(50);
+

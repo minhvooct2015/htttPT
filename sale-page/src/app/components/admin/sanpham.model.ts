@@ -7,3 +7,12 @@ export interface SanPham {
   hinhSP: string;   // Image URL
   loaiSP: string;   // Product Category
 }
+
+export interface UserInfor {
+  userName: string;
+  tenTK: string;
+  userNumber: string;
+  role: string;
+
+}
+

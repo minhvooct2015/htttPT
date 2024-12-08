@@ -1,6 +1,7 @@
 package com.example.DTOS;
 
 import com.example.ChiTietDonHangDTO;
+import com.example.enumss.TrangThaiDonHang;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class SanPhamCuaDonHangDTO {
 
     private String hinhSP;
     private String loaiSP;
+    private TrangThaiDonHang trangThaiDonHang;
+    private double phiGiaoHang;
 
     private ChiTietDonHangDTO chiTietDonHangDTO;
 }

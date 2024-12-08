@@ -14,6 +14,7 @@ import { NavbarComponent } from './components/admin/sidebar/navbar.component';
 import {TopBarComponent} from "./components/admin/topbar/topbar.component";
 import { ProductPageComponent } from './customer/product-page/product-page.component';
 import { CartPageComponent } from './customer/cart-page/cart-page.component';
+import { TopBarComponentCus } from './customer/top-bar/top-bar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 @NgModule({
@@ -25,6 +26,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     SanPhamComponent,
     NavbarComponent,
     TopBarComponent,
+    TopBarComponentCus,
     ProductPageComponent,
     CartPageComponent
   ],
