@@ -3,6 +3,7 @@ import {SanPham} from "../../components/admin/sanpham.model";
 import {LoaiSanPham} from "../../components/admin/loaisanpham.model";
 import {AdminService} from "../../services/admin.service";
 import {OrderService} from "../../services/order.service";
+import {Product, TrangThaiDonHang} from "../product.model";
 
 @Component({
   selector: 'app-product-page',
@@ -38,11 +39,21 @@ export class ProductPageComponent {
 
   getSanPham() {
     this.adminService.getSanPham().subscribe((data: any) => {
-      this.sanphamList = data;
+      this.sanphamList = this.getSanPhamCoSL(data);
       this.mulens = this.getSanPhamListByLoaiSP("LSP051");
       this.muluoitrais = this.getSanPhamListByLoaiSP("LSP254");
       this.munapbacks = this.getSanPhamListByLoaiSP("LSP418");
     });
+  }
+
+  getSanPhamCoSL(response: SanPham[]): SanPham[] {
+    const result: SanPham[] = [];
+    for (let product of response) {
+      if (product.soLuongTonKho > 0) {
+        result.push(product);
+      }
+    }
+    return result;
   }
 
   getLoaiSanPham() {

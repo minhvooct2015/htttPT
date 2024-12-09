@@ -18,7 +18,7 @@ public class LoaiSanPhamResource {
 
     @GET
     @Path("/all")
-    @RolesAllowed("ADMIN")
+//    @RolesAllowed("ADMIN")
     public List<LoaiSanPhamDTO> getAllLoaiSanPham() {
         return loaiSanPhamService.getAllLoaiSanPham();
     }

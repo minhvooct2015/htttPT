@@ -140,6 +140,36 @@ public class SanPhamService {
 
 
     @Transactional
+    public List<SanPhamDTO> updateSoLuongSanPham(List<UpdateSLSPDTO> updateSLSPDTOS, Operation operation) {
+        return updateSLSPDTOS.stream().map(ud -> updateSoLuongSanPham(ud.getSpId(), ud.getSoluongThaydoi(), operation))
+                .map(SanphamMapper::toDTO)
+                .collect(Collectors.toList());
+
+    }
+    @Transactional
+    public SanPham updateSoLuongSanPham(
+            String id,
+            Integer soLuongThayDoi,
+            Operation operation
+    ) {
+        SanPham existingSanPham = sanPhamRepository.findByMaSP(id);
+
+        if (existingSanPham == null) {
+            return null;
+        }
+
+        Integer soLuongTonKho = existingSanPham.getSoLuongTonKho();
+        if(soLuongTonKho < soLuongThayDoi) return null;
+        if (Operation.PLUS.equals(operation)) existingSanPham.setSoLuongTonKho(soLuongTonKho + soLuongThayDoi);
+        if (Operation.SUB.equals(operation)) existingSanPham.setSoLuongTonKho(soLuongTonKho - soLuongThayDoi);
+
+
+        sanPhamRepository.persist(existingSanPham);
+        return existingSanPham;
+    }
+
+
+    @Transactional
     public void deleteSanPham(String id) {
         sanPhamRepository.deleteByMaSP(id);
     }

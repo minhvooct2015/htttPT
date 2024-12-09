@@ -2,12 +2,12 @@ package com.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import java.nio.file.Files;
@@ -89,6 +89,25 @@ public class SanPhamResource {
         }
 
         return Response.ok().entity("Product updated successfully").build();
+    }
+
+
+    @PUT
+    @Path("updateSoLuong")
+    @Transactional
+//    @RolesAllowed("ADMIN")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateSLSanPham(
+           @RequestBody List<UpdateSLSPDTO> bodyInputs, @QueryParam("operation") Operation operation
+    ) {
+
+        List<SanPhamDTO> updated = sanPhamService.updateSoLuongSanPham(bodyInputs, operation);
+        if (updated == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Cannot update sanpham, product not found").build();
+        }
+
+        return Response.ok().entity(updated).build();
     }
 
 

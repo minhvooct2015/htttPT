@@ -2,15 +2,20 @@ package com.example.service;
 
 import com.example.ChiTietDonHang;
 import com.example.ChiTietDonHangDTO;
+import com.example.DTOS.UpdateSLSPDTO;
 import com.example.DonHang;
+import com.example.enumss.Operation;
+import com.example.product.ProductServiceClient;
 import com.example.repo.ChiTietDonHangRepository;
 import com.example.repo.DonHangRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ChiTietDonHangService {
@@ -20,6 +25,10 @@ public class ChiTietDonHangService {
 
     @Inject
     DonHangRepository donHangRepository;
+
+    @Inject
+    @RestClient
+    ProductServiceClient productServiceClient;
 
     @Transactional
     public ChiTietDonHangDTO addChiTietDonHang(ChiTietDonHangDTO chiTietDonHang) {
@@ -46,6 +55,11 @@ public class ChiTietDonHangService {
 
 
     public boolean deleteChiTietDonHang(String id) {
+        ChiTietDonHang ctdh = chiTietDonHangRepository.findById(id);
+        if (ctdh == null) {
+            return false;
+        }
+        productServiceClient.updateSL(List.of(new UpdateSLSPDTO(ctdh.getMaSp(), ctdh.getSoLuong())), Operation.PLUS);
 
         return chiTietDonHangRepository.deleteById(id);
     }

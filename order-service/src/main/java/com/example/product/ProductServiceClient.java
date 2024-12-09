@@ -1,12 +1,14 @@
 package com.example.product;
 
 import com.example.DTOS.SanPhamCuaDonHangDTO;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import com.example.DTOS.UpdateSLSPDTO;
+import com.example.enumss.Operation;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import java.util.List;
+import java.util.Set;
 
 @RegisterRestClient
 public interface ProductServiceClient {
@@ -31,6 +33,12 @@ public interface ProductServiceClient {
 
     @POST
     @Path("san-pham/danhsachSP")
-    List<SanPhamCuaDonHangDTO> getAllSPCuaDH(List<String> ids);
+    List<SanPhamCuaDonHangDTO> getAllSPCuaDH(Set<String> ids);
+
+    @PUT
+    @Path("san-pham/updateSoLuong")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    List<SanPhamDTO> updateSL(@RequestBody List<UpdateSLSPDTO> updates, @QueryParam("operation") Operation operation);
 
 }
