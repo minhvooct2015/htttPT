@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {DonHang, Product, TrangThaiDonHang} from "../product.model";
+import {Product, TrangThaiDonHang} from "../product.model";
 import {OrderService} from "../../services/order.service";
-import {SanPham} from "../../components/admin/sanpham.model";
+
 
 @Component({
   selector: 'app-cart-page',
@@ -35,10 +35,6 @@ export class CartPageComponent {
     //Only get san pham suer dang chon
     this.orderService.getProductsByUser(this.userId? this.userId : "").subscribe((response: Product[]) => {
       console.log('Initial response:', response);
-
-// Clone the response to a new array for independent filtering
-      const newProducts = [...response];
-      const newProduct1s = [...response];
 
 // Filter each array based on TrangThaiDonHang
       this.productsByUser = this.extractProductsWithTrangThai(response, TrangThaiDonHang.DANG_DAT)
@@ -82,20 +78,23 @@ export class CartPageComponent {
   }
 
   // Method to call API when "Proceed Checkout" button is clicked
-  proceedCheckout() {
+  proceedCheckout(tongtien: number) {
     if (confirm(`Are you sure you want to checkout?`)) {
 
-      const donhang = {trangThai: TrangThaiDonHang.DANG_XU_LY};
+      const donhang = {trangThai: TrangThaiDonHang.DANG_XU_LY,
+      tongTien: tongtien};
       console.log("checkout")
       this.orderService.checkout(this.maDH, donhang).subscribe(
         (response) => {
           console.log('Checkout successful!', response);
+          alert("successful")
           // Handle success (e.g., navigate to a success page, display a message, etc.)
         },
         (error) => {
           console.error('Checkout failed!', error);
           // Handle error (e.g., display an error message)
         });
+      this.loadProductsByUser();
     }
   }
 

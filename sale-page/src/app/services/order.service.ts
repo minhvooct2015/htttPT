@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {SanPham} from "../components/admin/sanpham.model";
-import {Observable, tap, throwError} from "rxjs";
+import {Observable} from "rxjs";
 import {DonHang, Product} from "../customer/product.model";
 
 @Injectable({
@@ -15,6 +15,10 @@ export class OrderService {
 
   getProductsByUser(userId: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl + "/dssp"}/${userId}`);
+  }
+
+  getAllProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl + "/all-dssp"}`);
   }
 
   removeSanPhamInCart(spId: string): Observable<void> {

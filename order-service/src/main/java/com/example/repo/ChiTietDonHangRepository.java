@@ -19,6 +19,10 @@ public class ChiTietDonHangRepository implements PanacheRepositoryBase<ChiTietDo
         return list("SELECT c FROM ChiTietDonHang c JOIN c.donHang d WHERE d.maNguoiDung = ?1", maNguoiDung);
     }
 
+    public List<ChiTietDonHang> findAllCTDH() {
+        return listAll();
+    }
+
     /**
      * Deletes a ChiTietDonHang entity by its ID.
      *

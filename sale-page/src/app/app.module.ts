@@ -17,6 +17,7 @@ import { CartPageComponent } from './customer/cart-page/cart-page.component';
 import { TopBarComponentCus } from './customer/top-bar/top-bar.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { DuyetsanphamComponent } from './components/admin/duyetsanpham/duyetsanpham.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +29,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     TopBarComponent,
     TopBarComponentCus,
     ProductPageComponent,
-    CartPageComponent
+    CartPageComponent,
+    DuyetsanphamComponent
   ],
   imports: [
     BrowserModule,

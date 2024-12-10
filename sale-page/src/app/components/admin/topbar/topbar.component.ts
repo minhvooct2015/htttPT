@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import {AdminService} from "../../../services/admin.service";
 import {Router} from "@angular/router";
 
@@ -20,7 +20,7 @@ export class TopBarComponent {
     this.router.navigate(['/login']);
   }
 
-  ngOninit() {
+  ngOnInit() {
     this.isLoginedUser = this.adminService.isLoginedUser();
   }
 }

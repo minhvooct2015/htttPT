@@ -13,6 +13,7 @@ import com.example.repo.DonHangRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -92,8 +93,17 @@ public class DonHangService {
                 .collect(Collectors.toList());
     }
 
+    public List<SanPhamCuaDonHangDTO> getAllDSSanPhamDonHang() {
+        List<ChiTietDonHang> allCTDH = chiTietDonHangRepository.findAllCTDH();
+        return buildSanPhamCuaDonHangDTOS(allCTDH);
+    }
     public List<SanPhamCuaDonHangDTO> getDSSanPhamDonHangBy(String maNguoiDung) {
         List<ChiTietDonHang> chiTietDonHangs = chiTietDonHangRepository.findByMaNguoiDung(maNguoiDung);
+        List<SanPhamCuaDonHangDTO> result = buildSanPhamCuaDonHangDTOS(chiTietDonHangs);
+        return result;
+    }
+
+    private List<SanPhamCuaDonHangDTO> buildSanPhamCuaDonHangDTOS(List<ChiTietDonHang> chiTietDonHangs) {
         List<ChiTietDonHangDTO> donHangDTOS = chiTietDonHangs.stream()
                 .map(OrderMapper::entityToDtoCTDH)
                 .collect(Collectors.toList());
@@ -124,7 +134,10 @@ public class DonHangService {
                                     .chiTietDonHangDTO(OrderMapper.entityToDtoCTDH(ctdonhang))
                                     .trangThaiDonHang(ctdonhang.getDonHang().getTrangThai())
                                     .phiGiaoHang(ctdonhang.getDonHang().getPhiGiaoHang())
+                                    .ngayDat(ctdonhang.getDonHang().getNgayDatHang())
+                                    .ngayThanhToan(ctdonhang.getDonHang().getNgayThanhToan())
                                     .hinhSP(sp.getHinhSP())
+                                    .tongTien(ctdonhang.getDonHang().getTongTien())
                                     .soLuongTonKho(sp.getSoLuongTonKho())
                                     .giaSP(sp.getGiaSP())
                                     .maSP(sp.getMaSP())
@@ -172,7 +185,15 @@ public class DonHangService {
     public void editTragThaiDonHang(String id, DonHangDTO donHangDTO) {
         // Find the existing DonHang entity by its ID (maDh)
         DonHang existingDonHang = donHangRepository.findById(id);
-        existingDonHang.setTrangThai(donHangDTO.getTrangThai());
+        TrangThaiDonHang trangThai = donHangDTO.getTrangThai();
+        if(trangThai.equals(TrangThaiDonHang.DANG_XU_LY)) {
+            existingDonHang.setNgayDatHang(LocalDate.now());
+            existingDonHang.setTongTien(donHangDTO.getTongTien());
+        }
+        if(trangThai.equals(TrangThaiDonHang.DA_GIAO))
+            existingDonHang.setNgayThanhToan(LocalDate.now());
+        existingDonHang.setTrangThai(trangThai);
+
     }
 
     public boolean deleteDonHang(String id) {

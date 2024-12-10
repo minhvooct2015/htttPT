@@ -16,6 +16,8 @@ export interface Product {
   soLuongTonKho: number;
   hinhSP: string;
   loaiSP: string;
+  ngayDat: Date;
+  tongTien: number;
   trangThaiDonHang: TrangThaiDonHang;
   chiTietDonHangDTO: ChiTietDonHangDTO;  // Nested ChiTietDonHangDTO
 }

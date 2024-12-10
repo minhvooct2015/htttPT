@@ -1,11 +1,15 @@
 package com.example.DTOS;
 
+import com.aayushatharva.brotli4j.common.annotations.Local;
 import com.example.ChiTietDonHangDTO;
 import com.example.enumss.TrangThaiDonHang;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -18,11 +22,13 @@ public class SanPhamCuaDonHangDTO {
     private String moTa;
     private Double giaSP;
     private Integer soLuongTonKho;
-
+    private BigDecimal tongTien;
     private String hinhSP;
     private String loaiSP;
     private TrangThaiDonHang trangThaiDonHang;
     private double phiGiaoHang;
+    private LocalDate ngayDat;
+    private LocalDate ngayThanhToan;
 
     private ChiTietDonHangDTO chiTietDonHangDTO;
 }

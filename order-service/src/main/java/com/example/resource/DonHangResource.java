@@ -65,6 +65,12 @@ public class DonHangResource {
         return donHangService.getDSSanPhamDonHangBy(maNguoiDung);
     }
 
+    @GET
+    @Path("/all-dssp")
+    public List<SanPhamCuaDonHangDTO> getAllDssp() {
+        return donHangService.getAllDSSanPhamDonHang();
+    }
+
 
     @DELETE
     @Path("/{id}")

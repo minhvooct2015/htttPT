@@ -101,7 +101,7 @@
             <p class="mb-0 pe-4">{{ phiVC + totalSum | currency:'VND' }}</p>
           </div>
           <!-- Button in HTML -->
-          <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" (click)="proceedCheckout()">Proceed Checkout</button>
+          <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" (click)="proceedCheckout(phiVC + totalSum)">Proceed Checkout</button>
         </div>
       </div>
     </div>
