@@ -13,3 +13,65 @@
 
 //ALTER TABLE NguoiDung MODIFY COLUMN vaiTro VARCHAR(50);
 
+ALTER TABLE NguoiDung
+ADD COLUMN Ma_phuong_xa VARCHAR(50), -- Add the foreign key column (adjust the data type if needed)
+ADD CONSTRAINT FK_Phuong_Xa
+FOREIGN KEY (Ma_phuong_xa)
+REFERENCES Phuong_Xa (Ma_phuong_xa);
+==================
+
+alter table NguoiDung
+add column Ma_PX varchar(10) not null;
+
+create table Phuong_Xa (
+Ma_PX varchar(10) not null,
+Cap varchar(255) not null,
+Ten_PX varchar(255) not null,
+Ten_Tieng_Anh varchar(255),
+Ma_QH varchar(10) not null,
+primary key (Ma_PX)
+) engine=InnoDB;
+
+create table Quan_Huyen (
+Ma_QH varchar(10) not null,
+Ten_QH varchar(255) not null,
+Ma_TP varchar(10) not null,
+primary key (Ma_QH)
+) engine=InnoDB;
+
+create table Tinh_Thanh_Pho (
+Ma_TP varchar(10) not null,
+Ten_TP varchar(255) not null,
+primary key (Ma_TP)
+) engine=InnoDB;
+
+alter table NguoiDung
+add constraint FK5jcn07qd79v3ai4s69ebv44ve
+foreign key (Ma_PX)
+references Phuong_Xa (Ma_PX);
+
+alter table Phuong_Xa
+add constraint FK6d1r6q3ffp2cxdrcasonwrjyn
+foreign key (Ma_QH)
+references Quan_Huyen (Ma_QH);
+
+alter table Quan_Huyen
+add constraint FKa1te3fbtv3bskl007c9c5nxa2
+foreign key (Ma_TP)
+references Tinh_Thanh_Pho (Ma_TP);
+
+
+select count(*) from Tinh_Thanh_Pho where  Ma_TP >=1 and Ma_TP <=20
+13
+
+select count(*) from Tinh_Thanh_Pho where  Ma_TP >=21 and Ma_TP <=35
+10
+select count(*) from Tinh_Thanh_Pho where  Ma_TP >=36 and Ma_TP <=50
+10
+select count(*) from Tinh_Thanh_Pho where  Ma_TP >=51 and Ma_TP <=70
+12
+select count(*) from Tinh_Thanh_Pho where  Ma_TP >=71 and Ma_TP <=85
+9
+9
+select count(*) from Tinh_Thanh_Pho where  Ma_TP >=85
+

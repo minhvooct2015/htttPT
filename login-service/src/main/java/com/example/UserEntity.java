@@ -30,6 +30,11 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private VaiTro vaiTro;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Ma_PX", nullable = false)
+    private PhuongXa phuongXa;
+
+
     /**
      * Set password as a hashed value.
      * The password will be hashed using BCrypt before storing.
