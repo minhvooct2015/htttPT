@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.Getter;
 import lombok.Setter;
+import simulation.SimulationService;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -79,6 +80,24 @@ public class UserResource {
             // Handle any exceptions, log the error, and return an appropriate response
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Error registering user: " + e.getMessage())
+                    .build();
+        }
+    }
+
+    @Inject
+    SimulationService simulationService;
+    @POST
+    @Path("/simulation")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response simulate() {
+        try {
+            simulationService.one();
+            return Response.ok().build();
+        } catch (Exception e) {
+            // Handle any exceptions, log the error, and return an appropriate response
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Error simulation: " + e.getMessage())
                     .build();
         }
     }

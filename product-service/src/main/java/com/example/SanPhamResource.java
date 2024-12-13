@@ -2,6 +2,7 @@ package com.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -26,7 +27,7 @@ public class SanPhamResource {
 
     @GET
     @Path("/all")
-//    @RolesAllowed("ADMIN")
+    @RolesAllowed("KHACHHANG")
     public List<SanPhamDTO> getAllSanPham() {
         return sanPhamService.getAllSanPham();
     }

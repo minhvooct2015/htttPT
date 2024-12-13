@@ -187,6 +187,7 @@ public class DonHangService {
         DonHang existingDonHang = donHangRepository.findById(id);
         TrangThaiDonHang trangThai = donHangDTO.getTrangThai();
         if(trangThai.equals(TrangThaiDonHang.DANG_XU_LY)) {
+            //todo tinh gia tien tai day
             existingDonHang.setNgayDatHang(LocalDate.now());
             existingDonHang.setTongTien(donHangDTO.getTongTien());
         }

@@ -20,6 +20,13 @@ public class LoginService {
         return user; // Replace with actual JWT token
     }
 
+    public UserEntity findByTK(String taiKhoan) {
+        return userRepository.findByTaiKhoan(taiKhoan);
+
+    }
+
+
+
     public UserEntity register(UserRegistrationRequest request) {
         // Check if the user already exists
         if (userRepository.findByTaiKhoan(request.getTaiKhoan()) != null) {
@@ -35,7 +42,9 @@ public class LoginService {
         newUser.setMatKhau(request.getMatKhau()); // Hash password
         newUser.setTrangThai(request.getTrangThai());
         newUser.setTaiKhoan(request.getTaiKhoan());
+        if(request.getVaiTro() != null)
         newUser.setVaiTro(request.getVaiTro());
+        else newUser.setVaiTro(VaiTro.KHACHHANG);
 
         // Persist the new user to the database
         userRepository.save(newUser);
