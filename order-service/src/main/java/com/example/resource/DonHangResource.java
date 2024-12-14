@@ -4,6 +4,7 @@ import com.example.DTOS.SanPhamCuaDonHangDTO;
 import com.example.DonHang;
 import com.example.DonHangDTO;
 import com.example.service.DonHangService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -67,8 +68,16 @@ public class DonHangResource {
 
     @GET
     @Path("/all-dssp")
+    @RolesAllowed("ADMIN")
     public List<SanPhamCuaDonHangDTO> getAllDssp() {
         return donHangService.getAllDSSanPhamDonHang();
+    }
+
+    @GET
+    @Path("/all-dssp/dang-xu-ly")
+    @RolesAllowed("ADMIN")
+    public List<SanPhamCuaDonHangDTO> getAllDsspDaDat() {
+        return donHangService.getAllDSSanPhamDonHangXL();
     }
 
 

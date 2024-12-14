@@ -1,39 +1,39 @@
 <div class="register-container">
   <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
-    <h2>Register</h2>
+    <h2>Đăng ký</h2>
 
-    <label for="hoTen">Full Name <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
+    <label for="taiKhoan">Tài khoản <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
+    <input type="text" id="taiKhoan" formControlName="taiKhoan" />
+
+    <label for="hoTen">Họ tên đầy đủ <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
     <input type="text" id="hoTen" formControlName="hoTen" />
 
     <label for="email">Email <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
     <input type="email" id="email" formControlName="email" />
 
-    <label for="sdt">Phone Number <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
+    <label for="sdt">Số điện thoại <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
     <input type="text" id="sdt" formControlName="sdt" />
 
-    <label for="diaChi">Address <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
+    <label for="diaChi">Địa chỉ <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
     <input type="text" id="diaChi" formControlName="diaChi" />
 
-    <label for="matKhau">Password <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
+    <label for="matKhau">Mật khẩu <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
     <input type="password" id="matKhau" formControlName="matKhau" />
 
-    <label for="taiKhoan">Username <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
-    <input type="text" id="taiKhoan" formControlName="taiKhoan" />
+<!--    <label for="trangThai">Status <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>-->
+<!--    <select id="trangThai" formControlName="trangThai">-->
+<!--      <option value="ACTIVE">Active</option>-->
+<!--      <option value="BLOCKED">Blocked</option>-->
+<!--    </select>-->
 
-    <label for="trangThai">Status <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
-    <select id="trangThai" formControlName="trangThai">
-      <option value="ACTIVE">Active</option>
-      <option value="BLOCKED">Blocked</option>
-    </select>
-
-    <label for="vaiTro">Role <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>
-    <select id="vaiTro" formControlName="vaiTro">
-      <option value="ADMIN">Admin</option>
-      <option value="KHACHHANG">Customer</option>
-    </select>
+<!--    <label for="vaiTro">Role <fa-icon [icon]="faAsterisk" class="required-icon"></fa-icon></label>-->
+<!--    <select id="vaiTro" formControlName="vaiTro">-->
+<!--      <option value="ADMIN">Admin</option>-->
+<!--      <option value="KHACHHANG">Customer</option>-->
+<!--    </select>-->
 
 <!--    <button type="submit" [disabled]="!registerForm.valid">Register</button>-->
-    <button type="submit" >Register</button>
+    <button type="submit" >Đăng ký</button>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
 </div>

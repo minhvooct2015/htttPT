@@ -17,19 +17,19 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       hoTen: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required]],
       // sdt: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
       sdt: ['', [Validators.required]],
       diaChi: ['', [Validators.required]],
       matKhau: ['', [Validators.required, Validators.minLength(1)]],
-      taiKhoan: ['', [Validators.required, Validators.minLength(3)]],
-      trangThai: ['ACTIVE', Validators.required],
-      vaiTro: ['KHACHHANG', Validators.required],
+      taiKhoan: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   onRegister() {
-    if (this.registerForm.valid) {
+    console.log("start register");
+    // if (this.registerForm.valid) {
+      console.log("register")
       this.authService.register(this.registerForm.value).subscribe(
         (response) => {
           console.log('Registration successful!', response);
@@ -61,6 +61,6 @@ export class RegisterComponent {
           console.log(error)
         }
       );
-    }
+    // }
   }
 }

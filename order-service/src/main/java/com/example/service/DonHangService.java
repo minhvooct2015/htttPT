@@ -97,6 +97,11 @@ public class DonHangService {
         List<ChiTietDonHang> allCTDH = chiTietDonHangRepository.findAllCTDH();
         return buildSanPhamCuaDonHangDTOS(allCTDH);
     }
+
+    public List<SanPhamCuaDonHangDTO> getAllDSSanPhamDonHangXL() {
+        List<ChiTietDonHang> allCTDH = chiTietDonHangRepository.findAllCTDHDaXL();
+        return buildSanPhamCuaDonHangDTOS(allCTDH);
+    }
     public List<SanPhamCuaDonHangDTO> getDSSanPhamDonHangBy(String maNguoiDung) {
         List<ChiTietDonHang> chiTietDonHangs = chiTietDonHangRepository.findByMaNguoiDung(maNguoiDung);
         List<SanPhamCuaDonHangDTO> result = buildSanPhamCuaDonHangDTOS(chiTietDonHangs);

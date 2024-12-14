@@ -92,8 +92,8 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response simulate() {
         try {
-            simulationService.one();
-            return Response.ok().build();
+//            simulationService.one();
+            return Response.ok(simulationService.one()).build();
         } catch (Exception e) {
             // Handle any exceptions, log the error, and return an appropriate response
             return Response.status(Response.Status.BAD_REQUEST)

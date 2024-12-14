@@ -20,6 +20,10 @@ public interface OrderClient {
     void checkout(@PathParam("id") String id, DonHangDTO donHang, @HeaderParam("Authorization") String authHeader);
 
     @GET
+    @Path("donhang/all-dssp/dang-xu-ly")
+    List<SanPhamCuaDonHangDTO> getAllDonHangDangXL(@HeaderParam("Authorization") String authHeader);
+
+    @GET
     @Path("donhang/dssp/{maNguoiDung}")
     List<SanPhamCuaDonHangDTO> getDsspByMaNguoiDung(@PathParam("maNguoiDung") String maNguoiDung, @HeaderParam("Authorization") String authHeader);
     

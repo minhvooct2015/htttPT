@@ -18,6 +18,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class SimulationService {
@@ -34,7 +35,7 @@ public class SimulationService {
     @Inject
     LoginService loginService;
 
-    public void one() throws Exception {
+    public void one1()  {
         String user = "string1";
         String login = login(user);
         UserEntity userEntity = loginService.findByTK(user);
@@ -42,14 +43,12 @@ public class SimulationService {
         String jwt = "Bearer " + login;
         List<SanPhamDTO> allSP = productServiceClient.getAllSP(jwt);
         Optional<SanPhamDTO> sanpham = allSP.stream().filter(sp -> sp.getSoLuongTonKho() > 0).findAny();
-        String userNumber = userEntity.getMaNguoiDung(); // Replace with actual user number from storage
-        String maSp = sanpham.get().getMaSP();       // Replace with actual product ID
-        BigDecimal giaSP = BigDecimal.valueOf(sanpham.get().getGiaSP()); // Replace with actual product price
+        String userNumber = userEntity.getMaNguoiDung();
+        String maSp = sanpham.get().getMaSP();
+        BigDecimal giaSP = BigDecimal.valueOf(sanpham.get().getGiaSP());
 
         // Build ChiTietDonHangDTO instance
         ChiTietDonHangDTO chiTietDonHang = ChiTietDonHangDTO.builder()
-//                .maCtdh(null) // Assuming the ID is auto-generated or not required initially
-//                .maDh(null)   // To be set when DonHangDTO is finalized
                 .maSp(maSp)
                 .soLuong(1)
                 .thanhTien(giaSP)
@@ -75,6 +74,26 @@ public class SimulationService {
         double giaTien = sanPhamCuaDonHangDTO.getGiaSP() * sanPhamCuaDonHangDTO.getChiTietDonHangDTO().getSoLuong();
         DonHangDTO checkoutDTO = DonHangDTO.builder().tongTien(BigDecimal.valueOf(giaTien)).trangThai(TrangThaiDonHang.DANG_XU_LY).build();
         orderClient.checkout(sanPhamCuaDonHangDTO.getChiTietDonHangDTO().getMaDh(), checkoutDTO, jwt);
+    }
+
+    //admin approve
+    public List<SanPhamCuaDonHangDTO>  one(){
+        String user = "admin";
+        String login = login(user);
+
+        String jwt = "Bearer " + login;
+        List<SanPhamCuaDonHangDTO> allSP = orderClient.getAllDonHangDangXL(jwt);
+        List<SanPhamCuaDonHangDTO> collect = allSP.stream().filter(sanPhamCuaDonHangDTO -> {
+            LocalDate ngayDat = sanPhamCuaDonHangDTO.getNgayDat();
+            LocalDate now = LocalDate.now().minusDays(3);
+            boolean isBefor3days = ngayDat.isBefore(now);
+            return isBefor3days;
+        }).collect(Collectors.toList());
+//        return collect;
+        if(collect.isEmpty()) return Collections.emptyList();
+        DonHangDTO checkoutDTO = DonHangDTO.builder().trangThai(TrangThaiDonHang.DA_GIAO).build();
+        orderClient.checkout(collect.get(0).getChiTietDonHangDTO().getMaDh(), checkoutDTO, jwt);
+        return collect;
     }
     public void test(){
         ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -106,7 +125,7 @@ public class SimulationService {
     }
 
 
-    private String login(String userId) throws Exception {
+    private String login(String userId) {
         String loginPayload = "{\"username\":\"user" + userId + "\",\"password\":\"password\"}";
 
 

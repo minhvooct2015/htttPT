@@ -1,6 +1,7 @@
 package com.example.repo;
 
 import com.example.ChiTietDonHang;
+import com.example.enumss.TrangThaiDonHang;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,6 +22,11 @@ public class ChiTietDonHangRepository implements PanacheRepositoryBase<ChiTietDo
 
     public List<ChiTietDonHang> findAllCTDH() {
         return listAll();
+    }
+
+    public List<ChiTietDonHang> findAllCTDHDaXL() {
+        return list("SELECT c FROM ChiTietDonHang c JOIN c.donHang d WHERE d.trangThai = ?1", TrangThaiDonHang.DANG_XU_LY);
+
     }
 
     /**

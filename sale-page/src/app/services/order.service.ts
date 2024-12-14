@@ -57,11 +57,11 @@ export class OrderService {
     this.http.post(this.apiUrl, donHang).subscribe(
       (response) => {
         console.log('Order placed successfully', response);
-        alert('Product added to cart successfully!');
+        alert('Đã thêm giỏ hàng thành công!');
       },
       (error) => {
-        console.error('Error placing order', error);
-        alert('Failed to add product to cart!');
+        console.error('Lỗi thêm đơn hàng', error);
+        alert('Lỗi thêm đơn hàng!');
       }
     );
   }
