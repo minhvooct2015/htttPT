@@ -62,3 +62,41 @@ docker exec -it mysql-container mysql -u loginUser -p1234 loginDB
 docker run --name mysql-container-app1 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loginDB1 -e MYSQL_USER=user1 -e MYSQL_PASSWORD=pass1 -p 3307:3306 -d mysql:8.0
 # MySQL container for App 2
 docker run --name mysql-container-app2 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=loginDB2 -e MYSQL_USER=user2 -e MYSQL_PASSWORD=pass2 -p 3308:3306 -d mysql:8.0
+
+
+Run the Zookeeper container:
+
+[//]: # (Kafka)
+docker run -d \
+--name zookeeper \
+-p 2181:2181 \
+-e ZOOKEEPER_CLIENT_PORT=2181 \
+confluentinc/cp-zookeeper:latest
+
+Start Kafka:
+
+docker run -d \
+--name kafka \
+-p 9092:9092 \
+--link zookeeper \
+-e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
+confluentinc/cp-kafka:latest
+
+
+delete topic
+docker exec -it kafka kafka-topics --delete --topic orders --bootstrap-server localhost:9092
+
+
+[//]: # (tao topic
+docker exec -it kafka kafka-topics --create --topic orders --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+)
+
+[//]: # (consume topic)
+docker exec -it kafka kafka-console-consumer --bootstrap-server localhost:9092 --topic orders --from-beginning
+
+
+
+[//]: # (list topic )
+docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092

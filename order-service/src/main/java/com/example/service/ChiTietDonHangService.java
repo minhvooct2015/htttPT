@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.ChiTietDonHang;
 import com.example.ChiTietDonHangDTO;
 import com.example.DTOS.UpdateSLSPDTO;
+import com.example.DTOS.UpdateSLSPDTOKaf;
 import com.example.DonHang;
 import com.example.enumss.Operation;
 import com.example.product.ProductServiceClient;
@@ -29,6 +30,9 @@ public class ChiTietDonHangService {
     @Inject
     @RestClient
     ProductServiceClient productServiceClient;
+
+    @Inject
+    OrderServiceKafka orderServiceKafka;
 
     @Transactional
     public ChiTietDonHangDTO addChiTietDonHang(ChiTietDonHangDTO chiTietDonHang) {
@@ -59,7 +63,12 @@ public class ChiTietDonHangService {
         if (ctdh == null) {
             return false;
         }
-        productServiceClient.updateSL(List.of(new UpdateSLSPDTO(ctdh.getMaSp(), ctdh.getSoLuong())), Operation.PLUS);
+
+
+        List<UpdateSLSPDTO> updates = List.of(new UpdateSLSPDTO(ctdh.getMaSp(), ctdh.getSoLuong()));
+        orderServiceKafka.sendOrder(new UpdateSLSPDTOKaf(updates, Operation.PLUS));
+
+//        productServiceClient.updateSL(updates, Operation.PLUS);
 
         return chiTietDonHangRepository.deleteById(id);
     }

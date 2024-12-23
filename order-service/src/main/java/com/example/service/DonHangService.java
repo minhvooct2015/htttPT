@@ -4,6 +4,7 @@ import com.example.ChiTietDonHang;
 import com.example.ChiTietDonHangDTO;
 import com.example.DTOS.SanPhamCuaDonHangDTO;
 import com.example.DTOS.UpdateSLSPDTO;
+import com.example.DTOS.UpdateSLSPDTOKaf;
 import com.example.DonHangDTO;
 import com.example.enumss.Operation;
 import com.example.enumss.TrangThaiDonHang;
@@ -36,6 +37,9 @@ public class DonHangService {
     @Inject
     @RestClient
     ProductServiceClient productServiceClient;
+
+    @Inject
+    OrderServiceKafka orderServiceKafka;
 
     @Transactional
     public boolean hasDonHangDangDat(String maNguoidung) {
@@ -83,8 +87,8 @@ public class DonHangService {
             // Save and return the updated DonHang entity
             donHangRepository.persist(donHangDangDat);
         }
-
-        productServiceClient.updateSL(updateSLSPDTOS, Operation.SUB);
+        orderServiceKafka.sendOrder(new UpdateSLSPDTOKaf(updateSLSPDTOS, Operation.SUB));
+//        productServiceClient.updateSL(updateSLSPDTOS, Operation.SUB);
     }
 
     public List<DonHangDTO> getDonHangByMaNguoiDung(String maNguoiDung) {

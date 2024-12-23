@@ -1,14 +1,20 @@
 package com.example.resource;
 
 import com.example.DTOS.SanPhamCuaDonHangDTO;
+import com.example.DTOS.UpdateSLSPDTO;
+import com.example.DTOS.UpdateSLSPDTOKaf;
 import com.example.DonHang;
 import com.example.DonHangDTO;
+import com.example.enumss.Operation;
 import com.example.service.DonHangService;
+import com.example.service.OrderServiceKafka;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/donhang")
@@ -19,11 +25,30 @@ public class DonHangResource {
     @Inject
     DonHangService donHangService;
 
+    @Inject
+    OrderServiceKafka orderServiceKafka;
+
     @POST
     public Response addDonHang(DonHangDTO donHang) {
         donHang.setMaDh(null);
          donHangService.addDonHang(donHang);
         return Response.status(Response.Status.CREATED).build();
+    }
+
+    @Path("kaf-test")
+    @POST
+    public Response produceKAfka(@QueryParam("spId") String spId) {
+        List<UpdateSLSPDTO> updates = new ArrayList<>();
+
+        // Create some UpdateSLSPDTO objects
+        UpdateSLSPDTO update1 = new UpdateSLSPDTO();
+        update1.setSpId(spId);
+        update1.setSoluongThaydoi(1);
+
+        updates.add(update1);
+
+        orderServiceKafka.sendOrder(new UpdateSLSPDTOKaf(updates, Operation.SUB));
+        return Response.status(Response.Status.OK).build();
     }
 
     @PUT
