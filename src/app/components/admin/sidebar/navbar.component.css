@@ -1,0 +1,83 @@
+/* Sidebar Styling */
+.sidebar {
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  top: 45px;
+  left: 0;
+  background-color: #F2F2F2; /* Darker background for a professional look */
+  color: #333;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Softer shadow for subtle depth */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean and modern font */
+  font-size: 1rem; /* Standard font size */
+  z-index: 500; /* Ensure it's above content, below the top bar */
+
+}
+
+/* Sidebar Logo (Optional) */
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Sidebar Links */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-links li {
+  margin: 15px 0; /* Spacing between links */
+}
+
+.sidebar-links a {
+  text-decoration: none;
+  color: #333; /* Lighter text for links */
+  font-size: 1.1rem; /* Slightly larger font size for readability */
+  padding: 10px 15px;
+  display: block;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Active Link Styling */
+.sidebar-links a.active,
+.sidebar-links a:hover {
+  background-color: #FFD700; /* Blue background for hover and active states */
+  color: #333; /* White text on hover */
+  transform: scale(1.05); /* Subtle scale effect on hover */
+}
+
+/* Sidebar Collapse Button (optional, if you're using one) */
+.sidebar .collapse-btn {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none; /* Hide for now, you can display if needed for responsiveness */
+}
+
+/* Responsive Styling for Smaller Screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px; /* Smaller sidebar on mobile */
+    padding: 15px;
+  }
+
+  .sidebar .logo {
+    font-size: 1.2rem; /* Smaller logo on mobile */
+  }
+
+  .sidebar-links a {
+    font-size: 1rem; /* Slightly smaller font size on mobile */
+    padding: 8px 12px;
+  }
+}

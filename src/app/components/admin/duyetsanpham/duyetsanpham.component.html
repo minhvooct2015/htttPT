@@ -1,0 +1,40 @@
+<app-top-bar ></app-top-bar>
+
+<app-navbar></app-navbar> <!-- Add navbar here -->
+
+<div class="container">
+  <h2> Duyet don hang</h2>
+  <div class="table-container" *ngIf="productsDangXuLy.length < 1">
+    Khong co don hang nao can duyet
+  </div>
+  <!-- List Loai San Pham Section -->
+  <div class="table-container" *ngIf="productsDangXuLy.length > 0">
+    <h3>Danh Sách Loai San Pham</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Ma don hang</th>
+        <th>Mô Tả</th>
+        <th>Trang thai</th>
+        <th>Ngay dat</th>
+        <th>Tong tien</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of productsDangXuLy">
+        <td>{{ product?.chiTietDonHangDTO?.maDh }}</td>
+        <td>{{ product.phiGiaoHang }}</td>
+        <td>{{ product.trangThaiDonHang }}</td>
+        <td>{{ product.ngayDat }}</td>
+        <td>{{ product.tongTien }}</td>
+        <td class="action-buttons">
+          <button  title="Edit" (click)="proceedCheckout(product)" >
+            <i class="fa fa-check-square"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
