@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
+import {API_BASE_URL} from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: { username: string; password: string }): Observable<any> {
-    const apiUrl = 'http://localhost:9000/api/login'; // Replace with your backend URL.
+    const apiUrl = API_BASE_URL+ '/api/login'; // Replace with your backend URL.
     const payload = {
       taiKhoan: credentials.username,
       matKhau: credentials.password
@@ -30,7 +31,8 @@ export class AuthService {
     trangThai: string;
     vaiTro: string;
   }): Observable<any> {
-    const apiUrl = 'http://localhost:9000/api/register'; // Replace with your backend URL.
+
+    const apiUrl = API_BASE_URL + '/api/register'; // Replace with your backend URL.
     return this.http.post(apiUrl, userDetails).pipe(
       catchError(this.handleError) // Catch errors here and handle them
     );

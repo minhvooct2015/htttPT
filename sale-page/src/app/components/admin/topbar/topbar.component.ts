@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 })
 export class TopBarComponent {
  userName: string = "Hello - " + localStorage.getItem("userName") + "-" + localStorage.getItem("userNumber"); // User's name
-   appName: string = 'App name'; // Application name
+   appName: string = 'Nón HK'; // Application name
   isLoginedUser: boolean = false;
   constructor(private adminService: AdminService, private router: Router) {}
   onLogout(): void {

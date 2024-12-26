@@ -22,7 +22,8 @@ export class LoginComponent {
   }
 
   onLogin() {
-    if (this.loginForm.valid) {
+    if (this.loginForm.valid)
+      localStorage.clear();{
       this.authService.login(this.loginForm.value).subscribe(
         (response) => {
           console.log('Login successful!', response);

@@ -4,21 +4,22 @@ import { Observable } from 'rxjs';
 import {LoaiSanPham} from "../components/admin/loaisanpham.model";
 import {SanPham, UserInfor} from "../components/admin/sanpham.model";
 import {jwtDecode} from "jwt-decode";
+import {API_BASE_URL, PRODUCT_SERVICE_URL} from "../constants";
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  private baseUrl = 'http://localhost:9002'; // Replace with your API base URL
+  private baseUrl = API_BASE_URL; // Replace with your API base URL
 
   constructor(private http: HttpClient) {}
 
   // Loai San Pham APIs
   getLoaiSanPham(): Observable<LoaiSanPham[]> {
-    return this.http.get<LoaiSanPham[]>(`${this.baseUrl}/loai-san-pham/all`);
+    return this.http.get<LoaiSanPham[]>(`${PRODUCT_SERVICE_URL}/loai-san-pham/all`);
   }
 
   addLoaiSanPham(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/loai-san-pham`, data);
+    return this.http.post(`${PRODUCT_SERVICE_URL}/loai-san-pham`, data);
   }
 
   updateLoaiSanPham(data: LoaiSanPham): Observable<any> {
@@ -42,7 +43,6 @@ export class AdminService {
     return this.http.delete(`${this.baseUrl}/san-pham/${id}`);
   }
 
-  //todo hide button if khong xoa duoc loai s do bi khoa ngoai
   //todo hide button if khong xoa duoc loai s do bi khoa ngoai
 
   onLogout(): void {

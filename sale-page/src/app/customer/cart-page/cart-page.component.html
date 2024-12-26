@@ -2,21 +2,56 @@
 <app-top-bar-cus></app-top-bar-cus>
 
 <div class="container-fluid page-header py-5">
-  <h1 class="text-center text-white display-6">Giỏ hàng</h1>
+  <h1 class="text-center text-white display-6" *ngIf="currentPage === 'Giỏ hàng'">Giỏ hàng</h1>
+  <h1 class="text-center text-white display-6" *ngIf="currentPage === 'Lịch sử'" >Lịch sử</h1>
   <ol class="breadcrumb justify-content-center mb-0">
     <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 <!--    <li class="breadcrumb-item"><a href="#">Pages</a></li>-->
-    <li class="breadcrumb-item active text-white">Cart</li>
+    <li class="breadcrumb-item active text-white" *ngIf="currentPage === 'Giỏ hàng'">Giỏ hàng</li>
+    <li class="breadcrumb-item active text-white" *ngIf="currentPage === 'Lịch sử'">Lịch sử</li>
   </ol>
 </div>
 <!-- Single Page Header End -->
+<!-- Example buttons to switch between pages -->
+<div class="text-center mt-4">
+  <button class="btn"
+          (click)="setPage('Giỏ hàng')"
+          [ngClass]="{
+            'btn-primary': currentPage === 'Giỏ hàng',
+            'btn-outline-primary': currentPage !== 'Giỏ hàng'
+          }"
+          [disabled]="currentPage === 'Giỏ hàng'">
+    Giỏ hàng
+  </button>
+  <button class="btn"
+          (click)="setPage('Lịch sử')"
+          [ngClass]="{
+            'btn-secondary': currentPage === 'Lịch sử',
+            'btn-outline-secondary': currentPage !== 'Lịch sử'
+          }"
+          [disabled]="currentPage === 'Lịch sử'">
+    Lịch sử
+  </button>
+</div>
 
+
+<!--&lt;!&ndash; Content for Giỏ hàng &ndash;&gt;-->
+<!--<div *ngIf="currentPage === 'Giỏ hàng'" class="container mt-5">-->
+<!--  <h2>Giỏ hàng content here</h2>-->
+<!--  &lt;!&ndash; Add your Giỏ hàng-related content &ndash;&gt;-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Content for Lịch sử &ndash;&gt;-->
+<!--<div *ngIf="currentPage === 'Lịch sử'" class="container mt-5">-->
+<!--  <h2>Lịch sử content here</h2>-->
+<!--  &lt;!&ndash; Add your Lịch sử-related content &ndash;&gt;-->
+<!--</div>-->
 
 <!-- Cart Page Start -->
-<div class="container-fluid py-5" *ngIf="productsByUser.length>0">
+
+<div class="container-fluid py-5" *ngIf="productsByUser.length>0 && currentPage === 'Giỏ hàng'">
   <div class="container py-5">
     <div class="table-responsive">
-
 
       <table class="table">
         <thead>
@@ -168,6 +203,142 @@
 <!--              <i class="fa fa-times text-danger"></i>-->
 <!--            </button>-->
 <!--          </td>-->
+        </tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid py-5" *ngIf="productsProcessedByUser.length>0 && currentPage === 'Lịch sử'">
+  <div class="container py-5">
+    <div class="table-responsive">
+
+<h3 class="title">Đơn hàng đã giao</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Sản phẩm</th>
+          <th scope="col">Tên</th>
+          <th scope="col">Giá</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Thành tiền</th>
+          <!--          <th scope="col">Handle</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of productsProcessedByUser">
+          <th scope="row">
+            <div class="d-flex align-items-center">
+              <!--              <img src="{{imageRootPath + sanpham.hinhSP}}" alt="{{ sanpham.tenSP }}" class="product-image"/>-->
+              <img src="{{imageRootPath + product.hinhSP}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+            </div>
+          </th>
+          <td>
+            <p class="mb-0 mt-4">{{ product.tenSP }}</p>
+          </td>
+          <td>
+            <p class="mb-0 mt-4">{{ product.giaSP | currency:'VND' }}</p>
+          </td>
+          <td>
+            <div class="input-group quantity mt-4" style="width: 100px;">
+              <!--              <div class="input-group-btn">-->
+              <!--                <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decreaseQuantity(product)">-->
+              <!--                  <i class="fa fa-minus"></i>-->
+              <!--                </button>-->
+              <!--              </div>-->
+              <input type="text"
+                     class="form-control form-control-sm text-center border-0"
+                     [(ngModel)]="product.chiTietDonHangDTO.soLuong"
+                     (ngModelChange)="onQuantityChange(product)"
+                     [value]="product.chiTietDonHangDTO.soLuong">
+              <!--              <div class="input-group-btn">-->
+              <!--                <button class="btn btn-sm btn-plus rounded-circle bg-light border" (click)="increaseQuantity(product)">-->
+              <!--                  <i class="fa fa-plus"></i>-->
+              <!--                </button>-->
+              <!--              </div>-->
+            </div>
+          </td>
+          <td>
+            <p class="mb-0 mt-4">{{ product.giaSP * product.chiTietDonHangDTO.soLuong | currency:'VND' }}</p>
+            <!--          </td>-->
+            <!--          <td>-->
+            <!--            <button class="btn btn-md rounded-circle bg-light border mt-4"-->
+            <!--                    (click)="removeProduct(product)">-->
+            <!--              <i class="fa fa-times text-danger"></i>-->
+            <!--            </button>-->
+            <!--          </td>-->
+        </tr>
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid py-5" *ngIf="productsHuyByUser.length>0 && currentPage === 'Lịch sử'">
+  <div class="container py-5">
+    <div class="table-responsive">
+
+      <h3 class="title">Đơn hàng bị hủy</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Sản phẩm</th>
+          <th scope="col">Tên</th>
+          <th scope="col">Giá</th>
+          <th scope="col">Số lượng</th>
+          <th scope="col">Thành tiền</th>
+          <!--          <th scope="col">Handle</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let product of productsHuyByUser">
+          <th scope="row">
+            <div class="d-flex align-items-center">
+              <!--              <img src="{{imageRootPath + sanpham.hinhSP}}" alt="{{ sanpham.tenSP }}" class="product-image"/>-->
+              <img src="{{imageRootPath + product.hinhSP}}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+            </div>
+          </th>
+          <td>
+            <p class="mb-0 mt-4">{{ product.tenSP }}</p>
+          </td>
+          <td>
+            <p class="mb-0 mt-4">{{ product.giaSP | currency:'VND' }}</p>
+          </td>
+          <td>
+            <div class="input-group quantity mt-4" style="width: 100px;">
+              <!--              <div class="input-group-btn">-->
+              <!--                <button class="btn btn-sm btn-minus rounded-circle bg-light border" (click)="decreaseQuantity(product)">-->
+              <!--                  <i class="fa fa-minus"></i>-->
+              <!--                </button>-->
+              <!--              </div>-->
+              <input type="text"
+                     class="form-control form-control-sm text-center border-0"
+                     [(ngModel)]="product.chiTietDonHangDTO.soLuong"
+                     (ngModelChange)="onQuantityChange(product)"
+                     [value]="product.chiTietDonHangDTO.soLuong">
+              <!--              <div class="input-group-btn">-->
+              <!--                <button class="btn btn-sm btn-plus rounded-circle bg-light border" (click)="increaseQuantity(product)">-->
+              <!--                  <i class="fa fa-plus"></i>-->
+              <!--                </button>-->
+              <!--              </div>-->
+            </div>
+          </td>
+          <td>
+            <p class="mb-0 mt-4">{{ product.giaSP * product.chiTietDonHangDTO.soLuong | currency:'VND' }}</p>
+            <!--          </td>-->
+            <!--          <td>-->
+            <!--            <button class="btn btn-md rounded-circle bg-light border mt-4"-->
+            <!--                    (click)="removeProduct(product)">-->
+            <!--              <i class="fa fa-times text-danger"></i>-->
+            <!--            </button>-->
+            <!--          </td>-->
         </tr>
         </tbody>
       </table>

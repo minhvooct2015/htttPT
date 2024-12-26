@@ -5,3 +5,14 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.title {
+  font-size: 1.8rem;  /* Adjust the size of the title */
+  font-weight: bold;
+  color: #333;        /* Set the title color */
+  text-align: center; /* Center the title */
+  margin-bottom: 20px; /* Space below the title */
+  text-transform: uppercase; /* Optional: make title uppercase */
+  letter-spacing: 1px; /* Optional: add space between letters */
+}
+

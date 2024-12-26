@@ -17,7 +17,9 @@ import jakarta.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import com.example.DonHang;
@@ -157,7 +159,34 @@ public class DonHangService {
 
             });
         }
-        return result;
+
+//        // Count duplicates using Java 8 Stream API
+//        Map<String, Long> countMap = result.stream()
+//                .collect(Collectors.groupingBy(SanPhamCuaDonHangDTO::getMaSP, Collectors.counting()));
+        // Group by maSP and trangThai, then count duplicates
+        Map<String, Integer> countMap = result.stream()
+                .collect(Collectors.groupingBy(
+                        sp -> {
+                            String dkgroup = sp.getMaSP() + "-" + sp.getTrangThaiDonHang();
+                            return dkgroup;
+                        }, // Combine maSP and trangThai
+                        Collectors.summingInt(sp -> sp.getChiTietDonHangDTO().getSoLuong())
+                ));
+//        result.forEach(sp -> sp.getChiTietDonHangDTO().setSoLuong(countMap.getOrDefault(sp.getMaSP() + "-" + sp.getTrangThaiDonHang(), 0L).intValue()));
+        // Update soLuong for each unique entry and filter duplicates
+        List<SanPhamCuaDonHangDTO> uniqueResult = result.stream()
+                .filter(distinctByKey(sp -> sp.getMaSP() + "-" + sp.getTrangThaiDonHang()))
+                .peek(sp -> sp.getChiTietDonHangDTO()
+                        .setSoLuong(countMap.getOrDefault(sp.getMaSP() + "-" + sp.getTrangThaiDonHang(), 0).intValue()))
+                .collect(Collectors.toList());
+
+        return uniqueResult;
+    }
+
+    // Utility method for distinct filtering
+    public static <T> java.util.function.Predicate<T> distinctByKey(java.util.function.Function<? super T, Object> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
     public DonHangDTO getDonHangById(String id) {

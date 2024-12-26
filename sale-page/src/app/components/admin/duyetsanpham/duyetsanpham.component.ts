@@ -15,6 +15,7 @@ export class DuyetsanphamComponent {
   isEditing: boolean = false;
   products: Product[] = [];
   productsDangXuLy: Product[] = [];
+  productsDaGiao: Product[] = [];
   constructor(private adminService: AdminService, private orderService: OrderService) {}
 
   ngOnInit(): void {
@@ -58,6 +59,7 @@ export class DuyetsanphamComponent {
 // Filter each array based on TrangThaiDonHang
       this.products = response
       this.productsDangXuLy = this.extractProductsWithTrangThai(response, TrangThaiDonHang.DANG_XU_LY);
+      this.productsDaGiao = this.extractProductsWithTrangThai(response, TrangThaiDonHang.DA_GIAO);
 
     });
   }

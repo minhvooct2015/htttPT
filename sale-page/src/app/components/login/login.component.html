@@ -8,7 +8,7 @@
     <label for="password">Mật Khẩu</label>
     <input type="password" id="password" formControlName="password" />
 
-    <button type="submit" [disabled]="!loginForm.valid">Login</button>
+    <button type="submit" [disabled]="!loginForm.valid">Đăng nhập</button>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
 </div>

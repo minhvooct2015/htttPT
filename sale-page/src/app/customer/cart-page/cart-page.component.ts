@@ -26,6 +26,13 @@ export class CartPageComponent {
     this.loadProductsByUser();
   }
 
+  currentPage: string = 'Giỏ hàng'; // Default to 'Giỏ hàng'
+
+  // Method to set the page
+  setPage(page: string) {
+    this.currentPage = page;
+  }
+
   // // Function to get only products with TrangThaiDonHang.DANG_DAT
   // getPendingOrders() {
   //   return this.productsByUser.filter(product => product.trangThaiDonHang === TrangThaiDonHang.DANG_DAT);
@@ -51,6 +58,9 @@ export class CartPageComponent {
       this.totalSum = this.calculateTotalPrice(this.productsByUser);
     });
   }
+
+
+
 
   extractProductsWithTrangThai(response: Product[], ttdh: TrangThaiDonHang): Product[] {
     const result: Product[] = [];
@@ -100,7 +110,7 @@ export class CartPageComponent {
 
   // Remove product method
   removeProduct(product: Product) {
-    if (confirm(`Are you sure you want to remove ${product.tenSP}?`)) {
+    if (confirm(`Bạn có chắc chắn muốn xóa ${product.tenSP} không?`)) {
       this.orderService.removeSanPhamInCart(product.chiTietDonHangDTO?.maCtdh).subscribe({
         next: () => {
           console.log('Product removed from cart');

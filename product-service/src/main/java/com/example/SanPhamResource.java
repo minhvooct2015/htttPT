@@ -27,7 +27,7 @@ public class SanPhamResource {
 
     @GET
     @Path("/all")
-    @RolesAllowed("KHACHHANG")
+    @RolesAllowed({ "KHACHHANG", "ADMIN" })
     public List<SanPhamDTO> getAllSanPham() {
         return sanPhamService.getAllSanPham();
     }
@@ -49,7 +49,7 @@ public class SanPhamResource {
     @POST
     @Transactional
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    @RolesAllowed("ADMIN")
+    @RolesAllowed("ADMIN")
     public Response addSanPham(@MultipartForm MultipartBodyImageUpload multipartBodyImageUpload, @QueryParam("loaiSanPhamId") String loaiSanPhamId) {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -125,7 +125,7 @@ public class SanPhamResource {
     @Path("/{imageName}")
     @Produces({"image/jpeg", "image/png"})
 //    @RolesAllowed("ADMIN")
-//    @RolesAllowed({ "User", "Admin" })
+    @RolesAllowed({ "KHACHHANG", "ADMIN" })
     public Response getImage(@jakarta.ws.rs.PathParam("imageName") String imageName) {
         try {
             java.nio.file.Path imagePath = Paths.get(IMAGE_DIRECTORY, imageName);

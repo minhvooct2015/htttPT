@@ -3,18 +3,21 @@ import {HttpClient} from "@angular/common/http";
 import {SanPham} from "../components/admin/sanpham.model";
 import {Observable} from "rxjs";
 import {DonHang, Product} from "../customer/product.model";
+import {API_BASE_URL, ORDER_SERVICE_URL} from "../constants";
+
+let apiUrl = ORDER_SERVICE_URL;
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:9003/donhang';
+  private apiUrl = apiUrl + '/donhang';
   private apiUrlCTDH = 'http://localhost:9003/chitietdonhang';
   constructor(private http: HttpClient) {}
 
 
   getProductsByUser(userId: string): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl + "/dssp"}/${userId}`);
+    return this.http.get<Product[]>(`${API_BASE_URL  + "/donhang/dssp"}/${userId}`);
   }
 
   getAllProducts(): Observable<Product[]> {

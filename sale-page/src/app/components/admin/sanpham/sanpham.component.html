@@ -9,7 +9,7 @@
 
     <!-- Add San Pham Section -->
     <div class="form-container">
-      <h3>Add San Pham</h3>
+      <h3>Thêm sản phẩm</h3>
       <form (ngSubmit)="addSanPham()" enctype="multipart/form-data" class="add-form">
         <input
           type="text"
@@ -47,7 +47,7 @@
             name="loaiSanPhamId"
             required
           >
-            <option value="" disabled selected>Select Category</option>
+            <option value="" disabled selected>Chọn danh mục</option>
             <option *ngFor="let loaiSanPham of loaiSanPhamList" [value]="loaiSanPham.maDanhMuc">
               {{ loaiSanPham.tenDanhMuc }}
             </option>
@@ -67,7 +67,7 @@
 
     <!-- List San Pham Section -->
     <div class="table-container">
-      <h3>Danh Sách San Pham</h3>
+      <h3>Danh sách sản phẩm</h3>
       <table>
         <thead>
         <tr>
@@ -75,7 +75,7 @@
           <th>Mô Tả</th>
           <th>Giá</th>
           <th>Hình Ảnh</th> <!-- New column for Image -->
-          <th>Actions</th>
+          <th>Hành động</th>
         </tr>
         </thead>
         <tbody>
