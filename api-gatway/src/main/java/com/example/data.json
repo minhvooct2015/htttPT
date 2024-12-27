@@ -1,0 +1,15 @@
+{
+  "maNguoiDung": "user123",
+  "hoTen": "John Doe",
+  "email": "john.doe@example.com",
+  "sdt": "1234567890",
+  "diaChi": "123 Main St",
+  "matKhau": "password123",
+  "trangThai": "active",
+  "taiKhoan": "user123",
+  "vaiTro": "user"
+}
+
+
+//ALTER TABLE NguoiDung MODIFY COLUMN vaiTro VARCHAR(50);
+
